@@ -1,296 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Albin Jojo - Electronics & Computer Engineering Student specializing in Embedded Engineering, Machine Learning, and Software Development" />
-    
-    <title>Albin Jojo — Portfolio</title>
-    
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- Optimized font loading -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lekton:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    
-    <link rel="stylesheet" href="styles.css" />
-    
-    <!-- iOS Safari optimizations -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  </head>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Albin Jojo — Engineer</title>
+  <meta name="description" content="Albin Jojo — ML, Embedded Systems, and IoT Engineer. Building intelligent hardware systems." />
 
-  <body>
-    <div class="bg-grid" aria-hidden="true"></div>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
-    <!-- Header / Navbar -->
-    <header class="site-header" role="banner">
-      <div class="site-header-inner">
-        <span class="textbefore" aria-label="Albin Jojo">Albin Jojo</span>
-        <nav class="top-nav" role="navigation" aria-label="Main navigation">
-          <span class="nav-pill" aria-hidden="true"></span>
-          <a href="#home" class="active">Home</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
-          <span class="hamburger-inner"></span>
-        </button>
-      </div>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay">
-      <nav class="mobile-menu-nav" role="navigation" aria-label="Mobile navigation">
-        <a href="#home" class="active">Home</a>
+  <!-- ====== GLASS NAV ====== -->
+  <header class="glass-nav" id="nav">
+    <div class="glass-nav__inner">
+      <a href="#" class="glass-nav__logo">AJ<span>.</span></a>
+      <nav class="glass-nav__links">
+        <a href="#about">About</a>
         <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
+      <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="glass-nav__cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+        GitHub
+      </a>
+      <button class="theme-toggle" aria-label="Toggle theme" title="Switch theme">
+        <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="glass-nav__burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </header>
 
-    <main class="main-content">
-      <!-- Hero Section -->
-      <section id="home" class="hero">
-        <div class="heroframe">
-          <!-- Text Content -->
-          <div class="herotext">
-            <span class="status" role="status">Electronics & Computer Engineering Student</span>
+  <!-- Mobile overlay -->
+  <div class="mob-overlay">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/albinnnnn" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
 
-            <h1 class="qualifications">Embedded & Software Engineer</h1>
+  <main>
 
-            <p class="subtext">
-              Designing and building intelligent systems through
-              <strong>Embedded Engineering</strong>,
-              <strong>Machine Learning</strong>, and
-              <strong>Software Development</strong>.
-            </p>
-
-            <!-- Call to Action -->
-            <div class="hero-actions">
-              <a href="#projects" class="hero-btn primary">View Projects</a>
-              <a href="#contact" class="hero-btn secondary">Contact Me</a>
-            </div>
+    <!-- ====== HERO ====== -->
+    <section class="hero" id="hero">
+      <!-- Interactive wave background (hero only) -->
+      <canvas id="wave-canvas"></canvas>
+      
+      <div class="hero__inner">
+        <div class="hero__text">
+          <div class="hero__badge anim-in" data-delay="0">
+            <span class="pulse-dot"></span>
+            Electronics &amp; Computer Science · ML &amp; Embedded Systems
           </div>
+          <h1 class="hero__title anim-in" data-delay="200">
+            I build <em>intelligent software</em><br>
+            and <em>embedded systems.</em>
+          </h1>
+          <p class="hero__sub anim-in" data-delay="400">
+            Hi, I'm <strong>Albin Jojo</strong> — an Electronics and Computer Science student. I write low-level code, train machine learning models, and build functional hardware prototypes.
+          </p>
+          <div class="hero__buttons anim-in" data-delay="600">
+            <a href="#projects" class="btn-primary">View My Work</a>
+            <a href="#" id="resume-btn" class="btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Resume
+            </a>
+          </div>
+        </div>
+        <div class="hero__visual anim-in" data-delay="300">
+          <div class="hero__img-wrap">
+            <img src="images/profile.jpg" alt="Albin Jojo" />
+            <div class="hero__orbit"></div>
+            <div class="hero__orbit hero__orbit--2"></div>
+            <div class="hero__float-tag hero__float-tag--1">IOT</div>
+            <div class="hero__float-tag hero__float-tag--2">Embedded</div>
+            <div class="hero__float-tag hero__float-tag--3">AI</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero__scroll-hint anim-in" data-delay="900">
+        <div class="scroll-line"></div>
+        <span>scroll</span>
+      </div>
+    </section>
 
-          <!-- Profile -->
-          <div class="profile-container">
-            <div class="gradient-ring">
-              <div class="inner-circle">
-                <img 
-                  src="images/profile.jpg" 
-                  alt="Albin Jojo - Electronics & Computer Engineering Student" 
-                  loading="eager"
-                  width="240"
-                  height="240"
-                />
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>01</span> About Me</h2>
+        <div class="about-centered">
+          <div class="about-content scroll-reveal">
+            <p class="about-lead">I am a third year Electronics and Computer Engineering student interested in machine learning, computer vision, and embedded systems. I enjoy building systems that combine software and hardware to solve practical problems.</p>
+            <p>Most of my projects focus on computer vision models and embedded devices. I have worked on training models for tasks like helmet detection and plant disease classification using PyTorch, and on hardware projects such as an RFID based attendance system and assistive smart glasses that read printed text aloud using OCR and text to speech.</p>
+            <p>My work usually involves the full pipeline of a project, from data preparation and model training to integrating the solution with embedded hardware such as ESP32 or Raspberry Pi. I am particularly interested in systems where machine learning interacts with the physical world through sensors and edge devices.</p>
+            <p>Currently I am exploring deeper topics in computer vision, efficient ML models, and low level systems programming.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== PROJECTS ====== -->
+    <section class="section section--dark" id="projects">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>02</span> Selected Work</h2>
+
+        <div class="project scroll-reveal">
+          <div class="project__img">
+            <img src="images/yoloHelmet.png" alt="Helmet Detection using YOLO" />
+            <div class="project__img-overlay"></div>
+          </div>
+          <div class="project__info">
+            <span class="project__label">Computer Vision</span>
+            <h3>Helmet Detection — YOLO</h3>
+            <p>Real-time detection of helmet usage on motorcyclists via a custom-trained YOLOv11m model. Designed for scalable road-safety monitoring with an end-to-end training pipeline.</p>
+            <div class="project__tags">
+              <span>Python</span><span>PyTorch</span><span>YOLO</span><span>OpenCV</span>
+            </div>
+            <a href="https://github.com/albinnnnn/helmet-detection-yolo" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+          </div>
+        </div>
+
+        <div class="project project--flip scroll-reveal">
+          <div class="project__img">
+            <img src="images/RFIDproject.jpg" alt="Smart RFID Attendance Monitor" />
+            <div class="project__img-overlay"></div>
+          </div>
+          <div class="project__info">
+            <span class="project__label project__label--hw">Embedded / IoT</span>
+            <h3>RFID Attendance System</h3>
+            <p>Edge-first attendance tracking with ESP32 and RFID. Operates offline with local storage and processing — no cloud dependency.</p>
+            <div class="project__tags">
+              <span>ESP32</span><span>RFID</span><span>C++</span>
+            </div>
+            <a href="https://github.com/albinnnnn/edge-based-rfid-attendance-system" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+          </div>
+        </div>
+
+        <div class="project scroll-reveal">
+          <div class="project__img">
+            <img src="images/smartglassProject.jpg" alt="Smart Glasses for Text Reading" />
+            <div class="project__img-overlay"></div>
+          </div>
+          <div class="project__info">
+            <span class="project__label project__label--hw">Hardware + AI</span>
+            <h3>Smart Glasses — Text Reader</h3>
+            <p>Assistive wearable: Camera → EasyOCR → pyttsx3 speech. Runs on Raspberry Pi Zero tethered to an ESP32 controller, reading printed text aloud for the visually impaired.</p>
+            <div class="project__tags">
+              <span>RPi Zero</span><span>ESP32</span><span>EasyOCR</span><span>pyttsx3</span>
+            </div>
+            <a href="https://github.com/albinnnnn/ai-assisted-smart-glasses" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+          </div>
+        </div>
+
+        <div class="project project--flip scroll-reveal">
+          <div class="project__img">
+            <div class="project__placeholder">
+              <span>{ ML in C }</span>
+            </div>
+            <div class="project__img-overlay"></div>
+          </div>
+          <div class="project__info">
+            <span class="project__label">Algorithms</span>
+            <h3>ML From Scratch in C</h3>
+            <p>Implementing foundational machine learning algorithms entirely from scratch in pure C to deeply understand the math and optimize performance without high-level libraries.</p>
+            <div class="project__tags">
+              <span>C</span><span>Algorithms</span><span>Math</span>
+            </div>
+            <a href="https://github.com/albinnnnn/ml-from-scratch-in-c" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====== SKILLS ====== -->
+    <section class="section" id="skills">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>03</span> Tech Stack</h2>
+        <div class="tech-container">
+          
+          <!-- Category 1: Languages -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">Languages</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="tech-icon">
+                <span>Python</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/cplusplus/00599C" alt="C++" class="tech-icon">
+                <span>C / C++</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/dart/0175C2" alt="Dart" class="tech-icon">
+                <span>Dart</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://www.svgrepo.com/show/374167/verilog.svg" alt="Verilog" class="tech-icon">
+                <span>Verilog</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML" class="tech-icon">
+                <span>HTML</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS" class="tech-icon">
+                <span>CSS</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Projects Section -->
-      <section id="projects" class="projects-section">
-        <div class="projects-grid">
-          <article class="project-card" itemscope itemtype="https://schema.org/CreativeWork">
-            <span class="status-badge" aria-label="Live project">Live</span>
-            <div class="project-image">
-              <img 
-                src="images/RFIDproject.jpg" 
-                alt="Smart RFID Attendance Monitor system interface"
-                loading="lazy"
-                width="400"
-                height="200"
-              />
-            </div>
-            <div class="project-header">
-              <h3 itemprop="name">Smart RFID Attendance Monitor</h3>
-              <span class="project-category">Embedded / IoT</span>
-            </div>
-            <p class="project-description" itemprop="description">
-              Smart attendance monitoring system using edge computing.
-            </p>
-            <div class="tech-tags" role="list" aria-label="Technologies used">
-              <span class="tech-tag" role="listitem">ESP32</span>
-              <span class="tech-tag" role="listitem">RFID</span>
-              <span class="tech-tag" role="listitem">C++</span>
-            </div>
-            <div class="project-footer">
-              <span class="project-date">
-                <time datetime="2024-10-22">22 Oct 2024</time>
-              </span>
-              <a href="#" class="project-link" aria-label="View details of Smart RFID Attendance Monitor">
-                Details
-              </a>
-            </div>
-          </article>
-
-          <article class="project-card" itemscope itemtype="https://schema.org/CreativeWork">
-            <span class="status-badge" aria-label="Beta project">Beta</span>
-            <div class="project-image">
-              <img 
-                src="images/smartglassProject.jpg" 
-                alt="Smart Glass assistive technology device"
-                loading="lazy"
-                width="400"
-                height="200"
-              />
-            </div>
-            <div class="project-header">
-              <h3 itemprop="name">Smart Glass</h3>
-              <span class="project-category">AI / Assistive Tech</span>
-            </div>
-            <p class="project-description" itemprop="description">
-              AI-powered assistive device for visually challenged individuals.
-            </p>
-            <div class="tech-tags" role="list" aria-label="Technologies used">
-              <span class="tech-tag" role="listitem">Python</span>
-              <span class="tech-tag" role="listitem">OpenCV</span>
-              <span class="tech-tag" role="listitem">Machine Learning</span>
-            </div>
-            <div class="project-footer">
-              <span class="project-date">
-                <time datetime="2025-02-22">22 Feb 2025</time>
-              </span>
-              <a href="#" class="project-link" aria-label="View details of Smart Glass project">
-                Details
-              </a>
-            </div>
-          </article>
-
-          <article class="project-card" itemscope itemtype="https://schema.org/CreativeWork">
-            <div class="project-image">
-              <img
-                src="https://techieyantechnologies.com/wp-content/uploads/2025/08/placeholder-12.png"
-                alt="Upcoming project placeholder"
-                loading="lazy"
-                width="400"
-                height="200"
-              />
-            </div>
-            <div class="project-header">
-              <h3 itemprop="name">Mini Project</h3>
-              <span class="project-category">Upcoming</span>
-            </div>
-            <p class="project-description" itemprop="description">
-              Upcoming innovative project.
-            </p>
-            <div class="tech-tags" role="list" aria-label="Technologies to be determined">
-              <span class="tech-tag" role="listitem">TBD</span>
-            </div>
-            <div class="project-footer">
-              <span class="project-date">
-                <time datetime="2026">2026</time>
-              </span>
-              <a href="#" class="project-link" aria-label="Coming soon">
-                Soon
-              </a>
-            </div>
-          </article>
-
-          <article class="project-card" itemscope itemtype="https://schema.org/CreativeWork">
-            <div class="project-image">
-              <img
-                src="https://techieyantechnologies.com/wp-content/uploads/2025/08/placeholder-12.png"
-                alt="Strishti 2026 competition project placeholder"
-                loading="lazy"
-                width="400"
-                height="200"
-              />
-            </div>
-            <div class="project-header">
-              <h3 itemprop="name">Strishti 2026</h3>
-              <span class="project-category">Competition</span>
-            </div>
-            <p class="project-description" itemprop="description">
-              National-level technical project showcase.
-            </p>
-            <div class="tech-tags" role="list" aria-label="Project focus">
-              <span class="tech-tag" role="listitem">Innovation</span>
-            </div>
-            <div class="project-footer">
-              <span class="project-date">
-                <time datetime="2026">2026</time>
-              </span>
-              <a href="#" class="project-link" aria-label="Project planned for 2026">
-                Planned
-              </a>
-            </div>
-          </article>
-        </div>
-      </section>
-    </main>
-
-    <!-- Contact Section -->
-    <div id="contact" class="footerBG">
-      <!-- Subtle parallax grid -->
-      <div class="parallax-grid"></div>
-      
-      <h2 class="contact-footer" aria-label="Contact section">Contact</h2>
-      <h2 class="footer-name" aria-hidden="true">Albin</h2>
-      
-      <footer class="clean-footer" role="contentinfo">
-        <div class="clean-footer-card">
-          <div class="contact-content">
-            <h3 class="contact-title">Let's Work Together</h3>
-            <p class="contact-subtitle">
-              I'm always open to discussing new projects, creative ideas, 
-              or opportunities to be part of your vision.
-            </p>
-            
-            <!-- Contact Methods -->
-            <div class="contact-methods">
-              <a href="mailto:albin@example.com" class="contact-item">
-                <div class="contact-icon">📧</div>
-                <div class="contact-info">
-                  <div class="contact-label">Email</div>
-                  <div class="contact-value">albin@example.com</div>
-                </div>
-              </a>
-              
-              <a href="tel:+1234567890" class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div class="contact-info">
-                  <div class="contact-label">Phone</div>
-                  <div class="contact-value">+91 123 456 7890</div>
-                </div>
-              </a>
-              
-              <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="contact-item">
-                <div class="contact-icon">💼</div>
-                <div class="contact-info">
-                  <div class="contact-label">LinkedIn</div>
-                  <div class="contact-value">linkedin.com/in/albinjojo</div>
-                </div>
-              </a>
-            </div>
-            
-            <!-- Social Links -->
-            <div class="social-links">
-              <a href="https://github.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-                🔗
-              </a>
-              <a href="https://twitter.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">
-                🐦
-              </a>
-              <a href="https://instagram.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                📷
-              </a>
+          <!-- Category 2: Machine Learning & CV -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">ML &amp; Computer Vision</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch" class="tech-icon">
+                <span>PyTorch / CNNs</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/opencv/5C3EE8" alt="OpenCV" class="tech-icon">
+                <span>OpenCV</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/keras/D00000" alt="YOLO" class="tech-icon">
+                <span>YOLO / Detection</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://www.svgrepo.com/show/443422/text-box.svg" alt="EasyOCR" class="tech-icon">
+                <span>EasyOCR</span>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-      
-      <div class="footer-bottom">
-        <span>© 2025 Albin Jojo. All rights reserved.</span>
-      </div>
-    </div>
 
-    <script src="scripts.js"></script>
-  </body>
+          <!-- Category 3: Data Processing -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">Data Processing</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/numpy/013243" alt="NumPy" class="tech-icon">
+                <span>NumPy</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" class="tech-icon">
+                <span>Pandas</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/matplotlib/ffffff" alt="Matplotlib" class="tech-icon">
+                <span>Matplotlib</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 4: Embedded & IoT -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">Embedded &amp; IoT</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/espressif/E7352C" alt="ESP32" class="tech-icon">
+                <span>ESP32 / ESP8266</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/raspberrypi/A22846" alt="Raspberry Pi" class="tech-icon">
+                <span>Raspberry Pi</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/arduino/00979D" alt="Sensors" class="tech-icon">
+                <span>Sensors</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/microchiptechnology/FFB300" alt="I/O" class="tech-icon">
+                <span>SPI / I2C / UART</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 5: Electronics / EDA -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">Electronics / EDA</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://www.svgrepo.com/show/355325/virtuoso.svg" alt="Cadence" class="tech-icon">
+                <span>Cadence</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/mathworks/0076A8" alt="MATLAB" class="tech-icon">
+                <span>MATLAB</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/kicad/31409E" alt="KiCad" class="tech-icon">
+                <span>KiCad</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 6: Tools -->
+          <div class="tech-row scroll-reveal">
+            <div class="tech-row__label">Tools</div>
+            <div class="tech-row__items">
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="tech-icon">
+                <span>Git / GitHub</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" class="tech-icon">
+                <span>Linux</span>
+              </div>
+              <div class="tech-pill">
+                <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="Figma" class="tech-icon">
+                <span>Figma</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CTA BANNER ====== -->
+    <section class="cta-banner scroll-reveal">
+      <div class="container">
+        <h2>All projects are open-source.</h2>
+        <p>Browse, fork, contribute.</p>
+        <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="btn-primary btn-primary--lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+          github.com/albinnnnn
+        </a>
+      </div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>04</span> Get In Touch</h2>
+        <div class="contact-wrap scroll-reveal">
+          <p class="contact-text">Looking for an engineer who can solder, train models, and write firmware in the same project? Let's build something.</p>
+          <div class="contact-grid">
+            <a href="mailto:albinjojo4@gmail.com" class="contact-tile">
+              <span class="contact-tile__icon">✉️</span>
+              <strong>Email</strong>
+              <span>albinjojo4@gmail.com</span>
+            </a>
+            <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="contact-tile">
+              <span class="contact-tile__icon">💻</span>
+              <strong>GitHub</strong>
+              <span>github.com/albinnnnn</span>
+            </a>
+            <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="contact-tile">
+              <span class="contact-tile__icon">🔗</span>
+              <strong>LinkedIn</strong>
+              <span>linkedin.com/in/albinjojo</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>© 2026 Albin Jojo</span>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
 </html>

@@ -1,1 +1,20 @@
-/reference
+# Dependencies
+node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary / Build
+.parcel-cache/
+dist/
+build/
+.temp/
+.cache/

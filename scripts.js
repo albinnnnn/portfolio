@@ -1,546 +1,248 @@
 // =====================================================
-// CONFIG
+// SCRIPTS — Glass nav, scroll-reveal, cursor particles
 // =====================================================
-const NAV_OFFSET = parseInt(getComputedStyle(document.documentElement)
-  .getPropertyValue('--nav-height')) || 80;
+(() => {
+  'use strict';
 
-// =====================================================
-// HAMBURGER MENU TOGGLE
-// =====================================================
-const hamburger = document.querySelector('.hamburger-menu');
-const mobileOverlay = document.querySelector('.mobile-menu-overlay');
-const mobileMenuLinks = document.querySelectorAll('.mobile-menu-nav a');
-const body = document.body;
+  // ---------- DOM ----------
+  const glassNav   = document.querySelector('.glass-nav');
+  const burger     = document.querySelector('.glass-nav__burger');
+  const mobOverlay = document.querySelector('.mob-overlay');
+  const navLinks   = document.querySelectorAll('.glass-nav__links a');
+  const mobLinks   = document.querySelectorAll('.mob-overlay a');
+  const sections   = document.querySelectorAll('.section, .hero');
+  const themeToggle = document.querySelector('.theme-toggle');
+  const htmlEl     = document.documentElement;
 
-function toggleMobileMenu() {
-  const isActive = hamburger.classList.toggle('active');
-  mobileOverlay.classList.toggle('active');
-  body.style.overflow = isActive ? 'hidden' : '';
-  hamburger.setAttribute('aria-expanded', isActive);
-}
+  // ---------- THEME TOGGLE ----------
+  // Restore saved theme or default to dark
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  htmlEl.setAttribute('data-theme', savedTheme);
 
-function closeMobileMenu() {
-  hamburger.classList.remove('active');
-  mobileOverlay.classList.remove('active');
-  body.style.overflow = '';
-  hamburger.setAttribute('aria-expanded', 'false');
-}
-
-if (hamburger) {
-  hamburger.addEventListener('click', toggleMobileMenu);
-}
-
-// Close menu when clicking a link
-mobileMenuLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    closeMobileMenu();
+  themeToggle?.addEventListener('click', () => {
+    const current = htmlEl.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    htmlEl.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
   });
-});
 
-// Close menu on escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && mobileOverlay.classList.contains('active')) {
-    closeMobileMenu();
-  }
-});
-
-// Close menu when clicking overlay background
-mobileOverlay.addEventListener('click', (e) => {
-  if (e.target === mobileOverlay) {
-    closeMobileMenu();
-  }
-});
-
-// Sync active state between desktop and mobile menus
-function syncMobileMenuActive() {
-  const desktopActive = document.querySelector('.top-nav a.active');
-  if (desktopActive) {
-    const href = desktopActive.getAttribute('href');
-    mobileMenuLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === href);
-    });
-  }
-}
-
-// =====================================================
-// UTILITY: DEBOUNCE & THROTTLE
-// =====================================================
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-// =====================================================
-// SMOOTH SCROLL WITH MOBILE OPTIMIZATION
-// =====================================================
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener("click", e => {
-    const href = link.getAttribute("href");
-    if (href === "#") return;
-    
-    const target = document.querySelector(href);
-    if (!target) return;
-
+  // ---------- RESUME PLACEHOLDER ----------
+  const resumeBtn = document.getElementById('resume-btn');
+  resumeBtn?.addEventListener('click', e => {
     e.preventDefault();
+    // Show a brief toast-style message
+    let toast = document.getElementById('resume-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'resume-toast';
+      Object.assign(toast.style, {
+        position: 'fixed', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
+        background: 'var(--surface-h)', border: '1px solid var(--border-h)',
+        backdropFilter: 'blur(12px)', color: 'var(--white)',
+        fontFamily: 'var(--mono)', fontSize: '.82rem',
+        padding: '.75rem 1.5rem', borderRadius: '10px',
+        zIndex: '9999', opacity: '0', transition: 'opacity .3s'
+      });
+      document.body.appendChild(toast);
+    }
+    toast.textContent = 'Resume coming soon — check back later!';
+    toast.style.opacity = '1';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+  });
 
-    // Calculate offset dynamically
-    const headerHeight = document.querySelector('.site-header-inner')?.offsetHeight || NAV_OFFSET;
-    const offset = headerHeight + 20;
+  // ---------- HERO ENTRANCE (staggered) ----------
+  document.querySelectorAll('.anim-in').forEach(el => {
+    const delay = parseInt(el.dataset.delay || 0);
+    el.style.animationDelay = `${delay}ms`;
+  });
 
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-
-    window.scrollTo({
-      top: targetPosition,
-      behavior: "smooth"
-    });
-
-    // Update URL without jumping
-    if (history.pushState) {
-      history.pushState(null, null, href);
+  // ---------- MOBILE MENU ----------
+  function toggleMob() {
+    const open = burger.classList.toggle('open');
+    mobOverlay.classList.toggle('open');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger?.addEventListener('click', toggleMob);
+  mobLinks.forEach(l => l.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      burger?.classList.remove('open');
+      mobOverlay?.classList.remove('open');
+      document.body.style.overflow = '';
     }
   });
-});
 
-// =====================================================
-// SCROLL SPY + SLIDING PILL
-// =====================================================
-const nav = document.querySelector(".top-nav");
-const navLinks = nav?.querySelectorAll("a") || [];
-const pill = nav?.querySelector(".nav-pill");
+  // ---------- HIDE NAV ON SCROLL DOWN ----------
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    glassNav.classList.toggle('hide', y > lastY && y > 100);
+    lastY = y;
+  }, { passive: true });
 
-const sections = [
-  document.querySelector("#home"),
-  document.querySelector("#projects"),
-  document.querySelector("#contact")
-].filter(Boolean);
-
-let currentActive = null;
-let isInitialized = false;
-let isHovering = false; // Track hover state
-
-function movePillToActive() {
-  if (!pill || !nav || isHovering) return; // Don't move if hovering
-  
-  const activeLink = nav.querySelector("a.active");
-  if (!activeLink) return;
-
-  const linkRect = activeLink.getBoundingClientRect();
-  const navRect = nav.getBoundingClientRect();
-
-  pill.style.width = `${linkRect.width}px`;
-  pill.style.height = `${linkRect.height}px`;
-  pill.style.transform = `translate(
-    ${linkRect.left - navRect.left}px,
-    ${linkRect.top - navRect.top}px
-  )`;
-  pill.style.opacity = '1';
-}
-
-function updateActiveNav() {
-  if (sections.length === 0) return;
-  
-  const scrollPos = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const docHeight = document.documentElement.scrollHeight;
-  
-  let newActive = currentActive || sections[0]?.id || "home";
-
-  // Check if we're at the very bottom of the page
-  const atBottom = (windowHeight + scrollPos) >= (docHeight - 10);
-  
-  if (atBottom) {
-    // Force last section when at bottom
-    newActive = sections[sections.length - 1].id;
-  } else {
-    // Find active section based on scroll position
-    // Use center of viewport for better accuracy
-    const viewportCenter = scrollPos + (windowHeight / 2);
-    
-    sections.forEach((section) => {
-      if (!section) return;
-
-      const sectionTop = section.offsetTop;
-      const sectionBottom = sectionTop + section.offsetHeight;
-
-      // Check if viewport center is within this section
-      if (viewportCenter >= sectionTop && viewportCenter < sectionBottom) {
-        newActive = section.id;
-      }
+  // ---------- SCROLL SPY ----------
+  const spy = [...sections].filter(s => s.id);
+  function updateSpy() {
+    const pos = scrollY + innerHeight / 3;
+    let cur = '';
+    spy.forEach(s => { if (s.offsetTop <= pos) cur = s.id; });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
     });
   }
+  window.addEventListener('scroll', updateSpy, { passive: true });
+  updateSpy();
 
-  // Update active state
-  if (newActive !== currentActive) {
-    currentActive = newActive;
-
-    navLinks.forEach(link => {
-      const isActive = link.getAttribute("href") === `#${newActive}`;
-      link.classList.toggle("active", isActive);
+  // ---------- SMOOTH SCROLL ----------
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      const t = document.querySelector(href);
+      if (!t) return;
+      e.preventDefault();
+      const top = t.getBoundingClientRect().top + scrollY - 90;
+      scrollTo({ top, behavior: 'smooth' });
+      history.pushState?.(null, null, href);
     });
-
-    movePillToActive();
-    syncMobileMenuActive(); // Sync with mobile menu
-  }
-}
-
-// =====================================================
-// RAF-THROTTLED SCROLL LISTENER
-// =====================================================
-let ticking = false;
-function handleScroll() {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      updateActiveNav();
-      ticking = false;
-    });
-    ticking = true;
-  }
-}
-
-window.addEventListener("scroll", handleScroll, { passive: true });
-
-// =====================================================
-// INITIALIZATION
-// =====================================================
-function initialize() {
-  if (isInitialized) return;
-  
-  updateActiveNav();
-  movePillToActive();
-  isInitialized = true;
-}
-
-// Initialize when DOM is ready
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initialize);
-} else {
-  initialize();
-}
-
-// Re-initialize on load for images/fonts
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    movePillToActive();
-  }, 100);
-});
-
-// =====================================================
-// RESIZE HANDLER WITH DEBOUNCE
-// =====================================================
-const handleResize = debounce(() => {
-  movePillToActive();
-}, 150);
-
-window.addEventListener("resize", handleResize);
-
-// =====================================================
-// HOVER PREVIEW FOR NAV PILL
-// =====================================================
-if (nav && pill) {
-  navLinks.forEach(link => {
-    // Mouse enter - show hover state
-    link.addEventListener("mouseenter", () => {
-      isHovering = true;
-      
-      const linkRect = link.getBoundingClientRect();
-      const navRect = nav.getBoundingClientRect();
-
-      // Change pill appearance for hover
-      pill.style.opacity = '0.5'; // More transparent
-      pill.style.background = 'linear-gradient(135deg, rgba(59, 130, 255, 0.2), rgba(0, 255, 153, 0.15))'; // Lighter
-      pill.style.border = '1px solid rgba(255, 255, 255, 0.3)'; // Add border
-      pill.style.width = `${linkRect.width}px`;
-      pill.style.height = `${linkRect.height}px`;
-      pill.style.transform = `translate(
-        ${linkRect.left - navRect.left}px,
-        ${linkRect.top - navRect.top}px
-      )`;
-    });
-
-    // Mouse leave - return to active state
-    link.addEventListener("mouseleave", () => {
-      isHovering = false;
-      pill.style.opacity = '1';
-      pill.style.background = 'linear-gradient(135deg, rgba(59, 130, 255, 0.35), rgba(0, 255, 153, 0.25))'; // Original
-      pill.style.border = 'none'; // Remove border
-      movePillToActive();
-    });
-
-    // Touch support - prevent sticky hover on mobile
-    link.addEventListener("touchstart", () => {
-      isHovering = false;
-      pill.style.background = 'linear-gradient(135deg, rgba(59, 130, 255, 0.35), rgba(0, 255, 153, 0.25))';
-      pill.style.border = 'none';
-      movePillToActive();
-    }, { passive: true });
   });
-}
 
-// =====================================================
-// PROJECT CARDS INTERACTION
-// =====================================================
-const projectCards = document.querySelectorAll('.project-card');
-
-projectCards.forEach(card => {
-  // Add click handler for mobile
-  card.addEventListener('click', (e) => {
-    // Only handle if clicking the card itself or the link
-    if (e.target.closest('.project-link')) {
-      // Let the link handle navigation
-      return;
-    }
-    
-    // Optional: Add ripple effect or other mobile feedback
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const ripple = document.createElement('span');
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      width: 20px;
-      height: 20px;
-      left: ${x}px;
-      top: ${y}px;
-      transform: translate(-50%, -50%) scale(0);
-      animation: ripple 0.6s ease-out;
-      pointer-events: none;
-    `;
-    
-    card.style.position = 'relative';
-    card.appendChild(ripple);
-    
-    setTimeout(() => ripple.remove(), 600);
-  });
-});
-
-// Add ripple animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes ripple {
-    to {
-      transform: translate(-50%, -50%) scale(4);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
-
-// =====================================================
-// INTERSECTION OBSERVER FOR ANIMATIONS
-// =====================================================
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, observerOptions);
-
-// Observe project cards for entrance animation
-projectCards.forEach((card, index) => {
-  card.style.opacity = '0';
-  card.style.transform = 'translateY(20px)';
-  card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-  observer.observe(card);
-});
-
-// =====================================================
-// PERFORMANCE OPTIMIZATION: LAZY LOAD IMAGES
-// =====================================================
-if ('loading' in HTMLImageElement.prototype) {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  images.forEach(img => {
-    img.src = img.dataset.src || img.src;
-  });
-} else {
-  // Fallback for browsers that don't support lazy loading
-  const imageObserver = new IntersectionObserver((entries) => {
+  // ---------- SCROLL REVEAL ----------
+  const reveals = document.querySelectorAll('.scroll-reveal');
+  const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src || img.src;
-        imageObserver.unobserve(img);
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
       }
     });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  // ---------- FLOWING WAVE BACKGROUND (hero only) ----------
+  const canvas = document.getElementById('wave-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H;
+  let mx = -9999, my = -9999;
+  let targetMx = -9999, targetMy = -9999;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const hero = canvas.parentElement;
+    W = hero.offsetWidth;
+    H = hero.offsetHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  addEventListener('resize', resize);
+  addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    targetMx = e.clientX - rect.left;
+    targetMy = e.clientY - rect.top;
   });
+  addEventListener('mouseleave', () => { targetMx = -9999; targetMy = -9999; });
 
-  document.querySelectorAll('img').forEach(img => imageObserver.observe(img));
-}
+  // Wave parameters
+  const NUM_LINES = 45;       // number of wave lines (tighter band)
+  const POINTS = 220;         // points per line (smoothness)
+  const BASE_AMP = 70;        // base wave amplitude (bigger mountain peaks)
+  const MOUSE_RADIUS = 250;   // radius of mouse influence
+  const MOUSE_AMP = 45;       // extra amplitude from mouse
 
-// =====================================================
-// TOUCH GESTURE IMPROVEMENTS
-// =====================================================
-let touchStartY = 0;
-let touchEndY = 0;
+  let time = 0;
 
-document.addEventListener('touchstart', (e) => {
-  touchStartY = e.changedTouches[0].screenY;
-}, { passive: true });
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
 
-document.addEventListener('touchend', (e) => {
-  touchEndY = e.changedTouches[0].screenY;
-  handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
-  const swipeThreshold = 50;
-  const diff = touchStartY - touchEndY;
-  
-  // Optionally handle swipe gestures
-  if (Math.abs(diff) > swipeThreshold) {
-    // Swipe detected - can add custom logic here
-  }
-}
-
-// =====================================================
-// VIEWPORT HEIGHT FIX FOR MOBILE
-// =====================================================
-function setVhProperty() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-setVhProperty();
-window.addEventListener('resize', debounce(setVhProperty, 150));
-
-// =====================================================
-// PREVENT SCROLL DURING ANIMATIONS
-// =====================================================
-let isScrolling = false;
-let scrollTimer;
-
-window.addEventListener('scroll', () => {
-  isScrolling = true;
-  document.body.classList.add('is-scrolling');
-  
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(() => {
-    isScrolling = false;
-    document.body.classList.remove('is-scrolling');
-  }, 150);
-}, { passive: true });
-
-// =====================================================
-// ACCESSIBILITY IMPROVEMENTS
-// =====================================================
-// Add focus visible polyfill behavior
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Tab') {
-    document.body.classList.add('keyboard-nav');
-  }
-});
-
-document.addEventListener('mousedown', () => {
-  document.body.classList.remove('keyboard-nav');
-});
-
-// =====================================================
-// PERFORMANCE MONITORING (DEV ONLY)
-// =====================================================
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  window.addEventListener('load', () => {
-    if (window.performance) {
-      const perfData = window.performance.timing;
-      const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-      console.log(`Page load time: ${pageLoadTime}ms`);
+    // Smooth mouse
+    if (targetMx > -9000) {
+      mx += (targetMx - mx) * 0.06;
+      my += (targetMy - my) * 0.06;
+    } else {
+      mx = -9999;
+      my = -9999;
     }
-  });
-}
 
-// =====================================================
-// ERROR HANDLING
-// =====================================================
-window.addEventListener('error', (e) => {
-  console.error('Script error:', e.error);
-});
+    time += 0.003;
 
-// Graceful degradation for missing elements
-console.log('Portfolio script loaded successfully');
+    const isDark = htmlEl.getAttribute('data-theme') !== 'light';
 
-// =====================================================
-// PARALLAX SCROLL EFFECT (SUBTLE)
-// =====================================================
-const contactSection = document.querySelector('#contact');
-const footerName = document.querySelector('.footer-name');
-const parallaxGrid = document.querySelector('.parallax-grid');
+    // Center of the wave band — in the lower-center area like the reference
+    const centerY = H * 0.65;
+    const bandHeight = H * 0.35;
 
-function handleSubtleParallax() {
-  if (!contactSection) return;
-  
-  const sectionTop = contactSection.offsetTop;
-  const sectionHeight = contactSection.offsetHeight;
-  const scrollPos = window.scrollY;
-  
-  // Only apply parallax when section is in view
-  if (scrollPos + window.innerHeight > sectionTop && scrollPos < sectionTop + sectionHeight) {
-    const sectionScroll = scrollPos - sectionTop;
-    
-    // Subtle parallax on background name (moves slower)
-    if (footerName) {
-      const yPos = sectionScroll * 0.15; // Very subtle
-      footerName.style.transform = `translateX(-50%) translateY(${yPos}px)`;
+    for (let i = 0; i < NUM_LINES; i++) {
+      const t = i / (NUM_LINES - 1);   // 0..1
+      // Vertical position of this line in the band
+      const lineY = centerY - bandHeight / 2 + t * bandHeight;
+
+      ctx.beginPath();
+
+      for (let p = 0; p <= POINTS; p++) {
+        const px = (p / POINTS) * (W + 80) - 40;  // slight overshoot
+        const nx = p / POINTS;   // normalized x 0..1
+
+        // Multiple sine waves for dramatic mountain-like peaks
+        let wave = Math.sin(nx * 3.8 + time * 1.5 + t * 1.8) * BASE_AMP
+                 + Math.sin(nx * 6.5 - time * 1.0 + t * 3.0) * BASE_AMP * 0.4
+                 + Math.cos(nx * 2.0 + time * 2.2 + t * 1.0) * BASE_AMP * 0.55
+                 + Math.sin(nx * 10 + time * 0.7 + t * 4.5) * BASE_AMP * 0.1;
+
+        // Scale wave: more movement at center of band, less at edges
+        const centerDist = Math.abs(t - 0.5) * 2; // 0 at center, 1 at edges
+        wave *= 1 - centerDist * 0.5;
+
+        // Mouse influence
+        if (mx > -9000) {
+          const dxm = px - mx;
+          const dym = lineY + wave - my;
+          const dm = Math.sqrt(dxm * dxm + dym * dym);
+          if (dm < MOUSE_RADIUS) {
+            const influence = 1 - dm / MOUSE_RADIUS;
+            wave -= influence * influence * MOUSE_AMP;
+          }
+        }
+
+        const py = lineY + wave;
+        if (p === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+
+      // Alpha: stronger at center of band, fainter at edges
+      const edgeFade = 1 - Math.pow(Math.abs(t - 0.5) * 2, 1.5);
+      const baseAlpha = isDark ? 0.06 + edgeFade * 0.30 : 0.04 + edgeFade * 0.18;
+
+      // Color: purple/violet gradient matching the reference image
+      if (isDark) {
+        // Deep purple to bright magenta-purple
+        const r = Math.round(110 + t * 50);   // 110 → 160
+        const g = Math.round(15 + t * 15);    // 15 → 30
+        const b = Math.round(190 + t * 50);   // 190 → 240
+        ctx.strokeStyle = `rgba(${r},${g},${b},${baseAlpha})`;
+      } else {
+        // Lighter purple for light mode
+        const r = Math.round(90 + t * 40);
+        const g = Math.round(40 + t * 15);
+        const b = Math.round(160 + t * 50);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${baseAlpha * 0.7})`;
+      }
+
+      ctx.lineWidth = isDark ? 1.0 : 0.8;
+      ctx.stroke();
     }
-    
-    // Subtle grid movement
-    if (parallaxGrid) {
-      const gridPos = sectionScroll * 0.1;
-      parallaxGrid.style.transform = `translateY(${gridPos}px)`;
-    }
+
+    requestAnimationFrame(frame);
   }
-}
 
-// Throttled parallax scroll
-let parallaxTicking = false;
-window.addEventListener('scroll', () => {
-  if (!parallaxTicking) {
-    requestAnimationFrame(() => {
-      handleSubtleParallax();
-      parallaxTicking = false;
-    });
-    parallaxTicking = true;
-  }
-}, { passive: true });
+  if (!matchMedia('(prefers-reduced-motion:reduce)').matches) frame();
 
-// Initial parallax setup
-handleSubtleParallax();
-
-// =====================================================
-// INTERSECTION OBSERVER FOR CONTACT ITEMS
-// =====================================================
-const contactItems = document.querySelectorAll('.contact-item, .social-link');
-
-const contactObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateX(0)';
-      }, index * 100);
-    }
-  });
-}, {
-  threshold: 0.2
-});
-
-contactItems.forEach((item, index) => {
-  item.style.opacity = '0';
-  item.style.transform = 'translateX(-30px)';
-  item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  contactObserver.observe(item);
-});
+})();
