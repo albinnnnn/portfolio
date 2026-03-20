@@ -26,30 +26,7 @@
     localStorage.setItem('theme', next);
   });
 
-  // ---------- RESUME PLACEHOLDER ----------
-  const resumeBtn = document.getElementById('resume-btn');
-  resumeBtn?.addEventListener('click', e => {
-    e.preventDefault();
-    // Show a brief toast-style message
-    let toast = document.getElementById('resume-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'resume-toast';
-      Object.assign(toast.style, {
-        position: 'fixed', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
-        background: 'var(--surface-h)', border: '1px solid var(--border-h)',
-        backdropFilter: 'blur(12px)', color: 'var(--white)',
-        fontFamily: 'var(--mono)', fontSize: '.82rem',
-        padding: '.75rem 1.5rem', borderRadius: '10px',
-        zIndex: '9999', opacity: '0', transition: 'opacity .3s'
-      });
-      document.body.appendChild(toast);
-    }
-    toast.textContent = 'Resume coming soon — check back later!';
-    toast.style.opacity = '1';
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
-  });
+
 
   // ---------- HERO ENTRANCE (staggered) ----------
   document.querySelectorAll('.anim-in').forEach(el => {
