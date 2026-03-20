@@ -21,6 +21,8 @@
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#certifications">Certificates</a>
         <a href="#contact">Contact</a>
       </nav>
       <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="glass-nav__cta">
@@ -43,6 +45,8 @@
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#certifications">Certificates</a>
       <a href="#contact">Contact</a>
       <a href="https://github.com/albinnnnn" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
@@ -61,12 +65,19 @@
             <span class="pulse-dot"></span>
             Electronics &amp; Computer Science · ML &amp; Embedded Systems
           </div>
+          <div class="hero__badge hero__badge--internship anim-in" data-delay="100">
+            <span class="pulse-dot pulse-dot--internship"></span>
+            Open to Internship Opportunities
+          </div>
           <h1 class="hero__title anim-in" data-delay="200">
-            I build <em>intelligent software</em><br>
-            and <em>embedded systems.</em>
+            I build <br>
+            <span class="hero-rotating-wrap">
+              <span class="hero-rotating" id="hero-rotating">Embedded Systems &amp; IoT.</span>
+              <span class="hero-rotating hero-rotating--next" id="hero-rotating-next"></span>
+            </span>
           </h1>
           <p class="hero__sub anim-in" data-delay="400">
-            Hi, I'm <strong>Albin Jojo</strong> — an Electronics and Computer Science student. I write low-level code, train machine learning models, and build functional hardware prototypes.
+            Hi, I'm <strong>Albin Jojo</strong>, an Electronics and Computer Science student. I specialize in writing low-level firmware, training machine learning models, and bringing functional hardware prototypes to life.
           </p>
           <div class="hero__buttons anim-in" data-delay="600">
             <a href="#projects" class="btn-primary">View My Work</a>
@@ -98,10 +109,23 @@
         <h2 class="section-title scroll-reveal"><span>01</span> About Me</h2>
         <div class="about-centered">
           <div class="about-content scroll-reveal">
-            <p class="about-lead">I am a third year Electronics and Computer Engineering student interested in machine learning, computer vision, and embedded systems. I enjoy building systems that combine software and hardware to solve practical problems.</p>
-            <p>Most of my projects focus on computer vision models and embedded devices. I have worked on training models for tasks like helmet detection and plant disease classification using PyTorch, and on hardware projects such as an RFID based attendance system and assistive smart glasses that read printed text aloud using OCR and text to speech.</p>
-            <p>My work usually involves the full pipeline of a project, from data preparation and model training to integrating the solution with embedded hardware such as ESP32 or Raspberry Pi. I am particularly interested in systems where machine learning interacts with the physical world through sensors and edge devices.</p>
-            <p>Currently I am exploring deeper topics in computer vision, efficient ML models, and low level systems programming.</p>
+            <p class="about-lead">I am an Electronics and Computer Science student passionate about bridging the gap between hardware and software.</p>
+            <p>I build intelligent systems where low-level hardware control meets machine learning. From training custom PyTorch models to writing efficient C/C++ code, my goal is always to build practical, real-world solutions. Always eager to learn new technologies and improve my skills.</p>
+          </div>
+          
+          <div class="learning-section scroll-reveal">
+            <h3 class="learning-title">Currently Learning:</h3>
+            <ul class="learning-list">
+              <li>
+                <strong>Embedded C &amp; RTOS:</strong> Memory management, pointers, and task scheduling for deterministic systems.
+              </li>
+              <li>
+                <strong>LLM &amp; RAG Systems:</strong> Retrieval-Augmented Generation, web scraping, and building AI pipelines.
+              </li>
+              <li>
+                <strong>Scalable System Design:</strong> Combining hardware, software, and AI components at scale.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -119,8 +143,8 @@
           </div>
           <div class="project__info">
             <span class="project__label">Computer Vision</span>
-            <h3>Helmet Detection — YOLO</h3>
-            <p>Real-time detection of helmet usage on motorcyclists via a custom-trained YOLOv11m model. Designed for scalable road-safety monitoring with an end-to-end training pipeline.</p>
+            <h3>Real-Time Helmet Detection</h3>
+            <p>Built a real-time safety monitoring system using YOLOv11m, engineered to perfectly handle complex occlusions and motion blur in dynamic environments.</p>
             <div class="project__tags">
               <span>Python</span><span>PyTorch</span><span>YOLO</span><span>OpenCV</span>
             </div>
@@ -135,8 +159,8 @@
           </div>
           <div class="project__info">
             <span class="project__label project__label--hw">Embedded / IoT</span>
-            <h3>RFID Attendance System</h3>
-            <p>Edge-first attendance tracking with ESP32 and RFID. Operates offline with local storage and processing — no cloud dependency.</p>
+            <h3>Zero-Cloud RFID Attendance</h3>
+            <p>Designed an edge-first, completely offline architecture for reliable and fast attendance tracking without relying on cloud infrastructure.</p>
             <div class="project__tags">
               <span>ESP32</span><span>RFID</span><span>C++</span>
             </div>
@@ -151,8 +175,8 @@
           </div>
           <div class="project__info">
             <span class="project__label project__label--hw">Hardware + AI</span>
-            <h3>Smart Glasses — Text Reader</h3>
-            <p>Assistive wearable: Camera → EasyOCR → pyttsx3 speech. Runs on Raspberry Pi Zero tethered to an ESP32 controller, reading printed text aloud for the visually impaired.</p>
+            <h3>Assistive OCR Smart Glasses</h3>
+            <p>Engineered a portable wearable system using Raspberry Pi and ESP32 to assist the visually impaired by providing real-time text-to-speech from live camera feeds.</p>
             <div class="project__tags">
               <span>RPi Zero</span><span>ESP32</span><span>EasyOCR</span><span>pyttsx3</span>
             </div>
@@ -169,8 +193,8 @@
           </div>
           <div class="project__info">
             <span class="project__label">Algorithms</span>
-            <h3>ML From Scratch in C</h3>
-            <p>Implementing foundational machine learning algorithms entirely from scratch in pure C to deeply understand the math and optimize performance without high-level libraries.</p>
+            <h3>Foundational ML in C</h3>
+            <p>Deconstructing deep learning to its core principles by implementing foundational algorithms without high-level abstractions.</p>
             <div class="project__tags">
               <span>C</span><span>Algorithms</span><span>Math</span>
             </div>
@@ -185,207 +209,245 @@
     <section class="section" id="skills">
       <div class="container">
         <h2 class="section-title scroll-reveal"><span>03</span> Tech Stack</h2>
-        <div class="tech-container">
+        <div class="tech-grid">
           
           <!-- Category 1: Languages -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">Languages</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal">
+            <h3 class="tech-card__title">Languages</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/python'); mask-image:url('https://cdn.simpleicons.org/python');"></span>
                 <span>Python</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/cplusplus/00599C" alt="C++" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/cplusplus'); mask-image:url('https://cdn.simpleicons.org/cplusplus');"></span>
                 <span>C / C++</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/dart/0175C2" alt="Dart" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/dart'); mask-image:url('https://cdn.simpleicons.org/dart');"></span>
                 <span>Dart</span>
               </div>
               <div class="tech-pill">
-                <img src="https://www.svgrepo.com/show/374167/verilog.svg" alt="Verilog" class="tech-icon">
+                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/374167/verilog.svg'); mask-image:url('https://www.svgrepo.com/show/374167/verilog.svg');"></span>
                 <span>Verilog</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML" class="tech-icon">
-                <span>HTML</span>
-              </div>
-              <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS" class="tech-icon">
-                <span>CSS</span>
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/html5'); mask-image:url('https://cdn.simpleicons.org/html5');"></span>
+                <span>HTML/CSS</span>
               </div>
             </div>
           </div>
 
           <!-- Category 2: Machine Learning & CV -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">ML &amp; Computer Vision</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal" style="transition-delay: 0.1s;">
+            <h3 class="tech-card__title">ML &amp; Computer Vision</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/pytorch'); mask-image:url('https://cdn.simpleicons.org/pytorch');"></span>
                 <span>PyTorch / CNNs</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/opencv/5C3EE8" alt="OpenCV" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/opencv'); mask-image:url('https://cdn.simpleicons.org/opencv');"></span>
                 <span>OpenCV</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/keras/D00000" alt="YOLO" class="tech-icon">
-                <span>YOLO / Detection</span>
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/keras'); mask-image:url('https://cdn.simpleicons.org/keras');"></span>
+                <span>YOLO</span>
               </div>
               <div class="tech-pill">
-                <img src="https://www.svgrepo.com/show/443422/text-box.svg" alt="EasyOCR" class="tech-icon">
+                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg'); mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg');"></span>
                 <span>EasyOCR</span>
               </div>
             </div>
           </div>
 
           <!-- Category 3: Data Processing -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">Data Processing</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal" style="transition-delay: 0.2s;">
+            <h3 class="tech-card__title">Data Processing</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/numpy/013243" alt="NumPy" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/numpy'); mask-image:url('https://cdn.simpleicons.org/numpy');"></span>
                 <span>NumPy</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/pandas'); mask-image:url('https://cdn.simpleicons.org/pandas');"></span>
                 <span>Pandas</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/matplotlib/ffffff" alt="Matplotlib" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/matplotlib'); mask-image:url('https://cdn.simpleicons.org/matplotlib');"></span>
                 <span>Matplotlib</span>
               </div>
             </div>
           </div>
 
           <!-- Category 4: Embedded & IoT -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">Embedded &amp; IoT</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal">
+            <h3 class="tech-card__title">Embedded &amp; IoT</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/espressif/E7352C" alt="ESP32" class="tech-icon">
-                <span>ESP32 / ESP8266</span>
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/espressif'); mask-image:url('https://cdn.simpleicons.org/espressif');"></span>
+                <span>ESP32</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/raspberrypi/A22846" alt="Raspberry Pi" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/raspberrypi'); mask-image:url('https://cdn.simpleicons.org/raspberrypi');"></span>
                 <span>Raspberry Pi</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/arduino/00979D" alt="Sensors" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/arduino'); mask-image:url('https://cdn.simpleicons.org/arduino');"></span>
                 <span>Sensors</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/microchiptechnology/FFB300" alt="I/O" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/microchiptechnology'); mask-image:url('https://cdn.simpleicons.org/microchiptechnology');"></span>
                 <span>SPI / I2C / UART</span>
               </div>
             </div>
           </div>
 
           <!-- Category 5: Electronics / EDA -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">Electronics / EDA</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal" style="transition-delay: 0.1s;">
+            <h3 class="tech-card__title">Electronics / EDA</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://www.svgrepo.com/show/355325/virtuoso.svg" alt="Cadence" class="tech-icon">
+                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/355325/virtuoso.svg'); mask-image:url('https://www.svgrepo.com/show/355325/virtuoso.svg');"></span>
                 <span>Cadence</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/mathworks/0076A8" alt="MATLAB" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/mathworks'); mask-image:url('https://cdn.simpleicons.org/mathworks');"></span>
                 <span>MATLAB</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/kicad/31409E" alt="KiCad" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/kicad'); mask-image:url('https://cdn.simpleicons.org/kicad');"></span>
                 <span>KiCad</span>
               </div>
             </div>
           </div>
 
           <!-- Category 6: Tools -->
-          <div class="tech-row scroll-reveal">
-            <div class="tech-row__label">Tools</div>
-            <div class="tech-row__items">
+          <div class="tech-card scroll-reveal" style="transition-delay: 0.2s;">
+            <h3 class="tech-card__title">Tools</h3>
+            <div class="tech-card__items">
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/git'); mask-image:url('https://cdn.simpleicons.org/git');"></span>
                 <span>Git / GitHub</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/linux'); mask-image:url('https://cdn.simpleicons.org/linux');"></span>
                 <span>Linux</span>
               </div>
               <div class="tech-pill">
-                <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="Figma" class="tech-icon">
+                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/figma'); mask-image:url('https://cdn.simpleicons.org/figma');"></span>
                 <span>Figma</span>
               </div>
             </div>
-            <div class="project-footer">
-              <span class="project-date">
-                <time datetime="2026">2026</time>
-              </span>
-              <a href="#" class="project-link" aria-label="Project planned for 2026">
-                Planned
-              </a>
-            </div>
-          </article>
+          </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- ====== EXPERIENCE ====== -->
+    <section class="section section--dark" id="experience">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>04</span> Experience</h2>
+        <div class="experience-timeline">
+          <div class="experience-card scroll-reveal">
+            <div class="experience-card__accent"></div>
+            <div class="experience-card__content">
+              <div class="experience-card__header">
+                <div>
+                  <h3>Embedded Systems Intern</h3>
+                  <span class="experience-card__company">Keltron</span>
+                </div>
+                <span class="experience-card__date">2 Weeks · 2024</span>
+              </div>
+              <ul class="experience-card__list">
+                <li>Worked on microcontroller-based hardware interfacing and real-world embedded applications.</li>
+                <li>Gained hands-on exposure to industry workflows in electronics system development.</li>
+              </ul>
+              <div class="experience-card__tags">
+                <span>Microcontrollers</span>
+                <span>Hardware Interfacing</span>
+                <span>Embedded Systems</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CERTIFICATIONS ====== -->
+    <section class="section" id="certifications">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>05</span> Certifications &amp; Training</h2>
+        <div class="cert-grid">
+          
+          <div class="cert-card scroll-reveal">
+            <div class="cert-card__header">
+              <h4>Winter Technical Training Programme</h4>
+              <span class="cert-card__date">Feb 2026</span>
+            </div>
+            <span class="cert-card__org">India Space Lab</span>
+            <p class="cert-card__desc">Drone Technology, CanSat/CubeSat, Rocketry, and Remote Sensing (GIS).</p>
+          </div>
+
+          <div class="cert-card scroll-reveal" style="transition-delay: 0.1s;">
+            <div class="cert-card__header">
+              <h4>Robotic Process Automation Workshop</h4>
+              <span class="cert-card__date">Feb 2026</span>
+            </div>
+            <span class="cert-card__org">Automation Anywhere</span>
+            <p class="cert-card__desc">Introduction to basic RPA concepts and simple bot creation workflows.</p>
+          </div>
+
+          <div class="cert-card scroll-reveal" style="transition-delay: 0.2s;">
+            <div class="cert-card__header">
+              <h4>Intro to Linux Commands &amp; Shell Scripting</h4>
+              <span class="cert-card__date">Oct 2025</span>
+            </div>
+            <span class="cert-card__org">IBM · Coursera</span>
+            <p class="cert-card__desc">Fundamentals of the Linux terminal, file operations, and basic shell scripting.</p>
+          </div>
+
+          <div class="cert-card scroll-reveal" style="transition-delay: 0.3s;">
+            <div class="cert-card__header">
+              <h4>Hands-on Workshop on Vega Processor</h4>
+              <span class="cert-card__date">May 2024</span>
+            </div>
+            <span class="cert-card__org">IIC &amp; CDAC Trivandrum</span>
+            <p class="cert-card__desc">Programming and sensor interfacing using the Vega RISC-V board.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
 
     <!-- Contact Section -->
-    <div id="contact" class="footerBG">
-      <!-- Subtle parallax grid -->
-      <div class="parallax-grid"></div>
-      
-      <h2 class="contact-footer" aria-label="Contact section">Contact</h2>
-      <h2 class="footer-name" aria-hidden="true">Albin</h2>
-      
-      <footer class="clean-footer" role="contentinfo">
-        <div class="clean-footer-card">
-          <div class="contact-content">
-            <h3 class="contact-title">Let's Work Together</h3>
-            <p class="contact-subtitle">
-              I'm always open to discussing new projects, creative ideas, 
-              or opportunities to be part of your vision.
-            </p>
-            
-            <!-- Contact Methods -->
-            <div class="contact-methods">
-              <a href="mailto:albin@example.com" class="contact-item">
-                <div class="contact-icon">📧</div>
-                <div class="contact-info">
-                  <div class="contact-label">Email</div>
-                  <div class="contact-value">albin@example.com</div>
-                </div>
+    <section class="section section--dark" id="contact">
+      <div class="container">
+        <h2 class="section-title scroll-reveal"><span>06</span> Get In Touch</h2>
+        <div class="about-centered">
+          <div class="about-content scroll-reveal">
+            <p class="about-lead">I'm always open to new challenges. Whether you need an intelligent hardware prototype or robust low-level software, let's connect.</p>
+            <div class="contact-methods" style="display:flex; flex-wrap:wrap; gap:1.25rem; margin-top:2rem;">
+              <a href="mailto:albinjojo4@gmail.com" class="contact-tile" style="flex:1; min-width:200px;">
+                <span class="contact-tile__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <strong>Email</strong>
+                <span>albinjojo4@gmail.com</span>
               </a>
-              
-              <a href="tel:+1234567890" class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div class="contact-info">
-                  <div class="contact-label">Phone</div>
-                  <div class="contact-value">+91 123 456 7890</div>
-                </div>
+              <a href="tel:+918301026124" class="contact-tile" style="flex:1; min-width:200px;">
+                <span class="contact-tile__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </span>
+                <strong>Phone</strong>
+                <span>+91 83010 26124</span>
               </a>
-              
-              <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="contact-item">
-                <div class="contact-icon">💼</div>
-                <div class="contact-info">
-                  <div class="contact-label">LinkedIn</div>
-                  <div class="contact-value">linkedin.com/in/albinjojo</div>
-                </div>
-              </a>
-            </div>
-            
-            <!-- Social Links -->
-            <div class="social-links">
-              <a href="https://github.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-                🔗
-              </a>
-              <a href="https://twitter.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">
-                🐦
-              </a>
-              <a href="https://instagram.com/albinjojo" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                📷
+              <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="contact-tile" style="flex:1; min-width:200px;">
+                <span class="contact-tile__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </span>
+                <strong>LinkedIn</strong>
+                <span>linkedin.com/in/albinjojo</span>
               </a>
             </div>
           </div>

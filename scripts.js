@@ -221,19 +221,11 @@
       const edgeFade = 1 - Math.pow(Math.abs(t - 0.5) * 2, 1.5);
       const baseAlpha = isDark ? 0.06 + edgeFade * 0.30 : 0.04 + edgeFade * 0.18;
 
-      // Color: purple/violet gradient matching the reference image
+      // Single color purple, shades via alpha
       if (isDark) {
-        // Deep purple to bright magenta-purple
-        const r = Math.round(110 + t * 50);   // 110 → 160
-        const g = Math.round(15 + t * 15);    // 15 → 30
-        const b = Math.round(190 + t * 50);   // 190 → 240
-        ctx.strokeStyle = `rgba(${r},${g},${b},${baseAlpha})`;
+        ctx.strokeStyle = `rgba(168, 85, 247, ${baseAlpha})`;
       } else {
-        // Lighter purple for light mode
-        const r = Math.round(90 + t * 40);
-        const g = Math.round(40 + t * 15);
-        const b = Math.round(160 + t * 50);
-        ctx.strokeStyle = `rgba(${r},${g},${b},${baseAlpha * 0.7})`;
+        ctx.strokeStyle = `rgba(124, 58, 237, ${baseAlpha})`;
       }
 
       ctx.lineWidth = isDark ? 1.0 : 0.8;
@@ -244,5 +236,45 @@
   }
 
   if (!matchMedia('(prefers-reduced-motion:reduce)').matches) frame();
+
+  // ---------- SLIDE-MASK HERO HEADLINE ----------
+  const heroRotating = document.getElementById('hero-rotating');
+  const heroNext = document.getElementById('hero-rotating-next');
+  const heroWrap = heroRotating?.parentElement;
+  
+  if (heroRotating && heroNext && heroWrap) {
+    const phrases = ["Embedded Systems & IoT.", "Machine Learning Models.", "Intelligent Hardware."];
+    let phraseIndex = 0;
+    const HOLD_TIME = 3000;
+    const TRANSITION_MS = 650;
+
+    function slideNext() {
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      heroNext.textContent = phrases[phraseIndex];
+
+      // Trigger slide
+      heroWrap.classList.add('sliding');
+
+      setTimeout(() => {
+        // Kill transitions so the swap is invisible
+        heroRotating.style.transition = 'none';
+        heroNext.style.transition = 'none';
+
+        // Swap: put the new phrase in the main span, reset classes
+        heroRotating.textContent = phrases[phraseIndex];
+        heroNext.textContent = '';
+        heroWrap.classList.remove('sliding');
+
+        // Force reflow so the browser applies the reset instantly
+        void heroRotating.offsetWidth;
+
+        // Re-enable transitions for the next cycle
+        heroRotating.style.transition = '';
+        heroNext.style.transition = '';
+      }, TRANSITION_MS + 50);
+    }
+
+    setInterval(slideNext, HOLD_TIME + TRANSITION_MS);
+  }
 
 })();
