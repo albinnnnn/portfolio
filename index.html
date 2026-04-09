@@ -138,31 +138,33 @@
 
         <div class="project scroll-reveal">
           <div class="project__img">
-            <img src="images/yoloHelmet.png" alt="Helmet Detection using YOLO" />
+            <div class="project__placeholder">
+              <span>🍅 TomatoScan</span>
+            </div>
             <div class="project__img-overlay"></div>
           </div>
           <div class="project__info">
-            <span class="project__label">Computer Vision</span>
-            <h3>Real-Time Helmet Detection</h3>
-            <p>Built a real-time safety monitoring system using YOLOv11m, engineered to perfectly handle complex occlusions and motion blur in dynamic environments.</p>
+            <span class="project__label">Edge AI · Computer Vision</span>
+            <h3>Tomato Leaf Disease Edge Classifier</h3>
+            <p>Built a dual-stage detection and classification pipeline (YOLOv8s + MobileNetV3-Large 10-class classifier) exported to FP32 ONNX for fully offline deployment on Raspberry Pi 4B. Achieved ~600 ms per-frame inference with weighted F1 ≈ 0.93 on a 14,500+ image test set.</p>
             <div class="project__tags">
-              <span>Python</span><span>PyTorch</span><span>YOLO</span><span>OpenCV</span>
+              <span>YOLOv8s</span><span>MobileNetV3</span><span>ONNX Runtime</span><span>Raspberry Pi 4B</span><span>Edge AI</span>
             </div>
-            <a href="https://github.com/albinnnnn/helmet-detection-yolo" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+            <a href="https://github.com/albinnnnn/leaf-disease-detector" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
         </div>
 
         <div class="project project--flip scroll-reveal">
           <div class="project__img">
-            <img src="images/RFIDproject.jpg" alt="Smart RFID Attendance Monitor" />
+            <img src="images/RFIDproject.jpg" alt="Distributed RFID Attendance System" />
             <div class="project__img-overlay"></div>
           </div>
           <div class="project__info">
             <span class="project__label project__label--hw">Embedded / IoT</span>
-            <h3>Zero-Cloud RFID Attendance</h3>
-            <p>Designed an edge-first, completely offline architecture for reliable and fast attendance tracking without relying on cloud infrastructure.</p>
+            <h3>Distributed RFID Attendance System</h3>
+            <p>Architected a 3-node IoT network over MQTT for real-time attendance synchronisation and centralised logging via Google Sheets API. Implemented SPIFFS-backed offline queuing on each node, ensuring zero data loss during Wi-Fi outages with automatic sync on reconnect.</p>
             <div class="project__tags">
-              <span>ESP32</span><span>RFID</span><span>C++</span>
+              <span>ESP32</span><span>MQTT</span><span>SPIFFS</span><span>Google Sheets API</span><span>IoT</span>
             </div>
             <a href="https://github.com/albinnnnn/edge-based-rfid-attendance-system" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
@@ -170,15 +172,15 @@
 
         <div class="project scroll-reveal">
           <div class="project__img">
-            <img src="images/smartglassProject.jpg" alt="Smart Glasses for Text Reading" />
+            <img src="images/smartglassProject.jpg" alt="Smart Reading Glasses" />
             <div class="project__img-overlay"></div>
           </div>
           <div class="project__info">
             <span class="project__label project__label--hw">Hardware + AI</span>
-            <h3>Assistive OCR Smart Glasses</h3>
-            <p>Engineered a portable wearable system using Raspberry Pi and ESP32 to assist the visually impaired by providing real-time text-to-speech from live camera feeds.</p>
+            <h3>Smart Reading Glasses — Assistive OCR</h3>
+            <p>Built a wearable offline OCR and Text-to-Speech device on Raspberry Pi Zero W. Adaptive image thresholding improved Tesseract accuracy over baseline. Optimised memory-constrained pipeline to achieve ~2–3 s end-to-end latency per capture with no cloud dependency.</p>
             <div class="project__tags">
-              <span>RPi Zero</span><span>ESP32</span><span>EasyOCR</span><span>pyttsx3</span>
+              <span>RPi Zero W</span><span>Tesseract OCR</span><span>Bluetooth</span><span>Text-to-Speech</span><span>Linux</span>
             </div>
             <a href="https://github.com/albinnnnn/ai-assisted-smart-glasses" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
@@ -186,19 +188,17 @@
 
         <div class="project project--flip scroll-reveal">
           <div class="project__img">
-            <div class="project__placeholder">
-              <span>{ ML in C }</span>
-            </div>
+            <img src="images/waveform.png" alt="UART Transceiver Waveform" />
             <div class="project__img-overlay"></div>
           </div>
           <div class="project__info">
-            <span class="project__label">Algorithms</span>
-            <h3>Foundational ML in C</h3>
-            <p>Deconstructing deep learning to its core principles by implementing foundational algorithms without high-level abstractions.</p>
+            <span class="project__label">Digital Design</span>
+            <h3>UART Transceiver with Baud Rate Generator</h3>
+            <p>Designed a complete UART TX/RX module in Verilog from scratch, including a parameterised baud rate generator derived from a configurable reference clock. Verified start/stop bit framing, mid-bit RX sampling, and serial-to-parallel conversion via testbench-based functional simulation.</p>
             <div class="project__tags">
-              <span>C</span><span>Algorithms</span><span>Math</span>
+              <span>Verilog</span><span>Digital Design</span><span>UART</span><span>Icarus Verilog</span><span>GTKWave</span>
             </div>
-            <a href="https://github.com/albinnnnn/ml-from-scratch-in-c" target="_blank" rel="noopener" class="project__link">View Repository →</a>
+            <a href="https://github.com/albinnnnn/verilog-uart-fsm" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
         </div>
 
@@ -256,7 +256,11 @@
               </div>
               <div class="tech-pill">
                 <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg'); mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg');"></span>
-                <span>EasyOCR</span>
+                <span>Tesseract OCR</span>
+              </div>
+              <div class="tech-pill">
+                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/395175/onnx.svg'); mask-image:url('https://www.svgrepo.com/show/395175/onnx.svg');"></span>
+                <span>ONNX Runtime</span>
               </div>
             </div>
           </div>
