@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Albin Jojo — Engineer</title>
-  <meta name="description" content="Albin Jojo — ML, Embedded Systems, and IoT Engineer. Building intelligent hardware systems." />
+  <title>Albin Jojo — Firmware & Edge AI</title>
+  <meta name="description" content="Albin Jojo — Embedded Systems, Edge AI, and IoT. I write firmware, train models, and ship hardware." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/x-icon" href="images/blaze/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/blaze/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/blaze/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/blaze/favicon-16x16.png" />
-  <link rel="manifest" href="images/blaze/site.webmanifest" />
+  <link rel="icon" type="image/x-icon" href="assets/blaze/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/blaze/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/blaze/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/blaze/favicon-16x16.png" />
+  <link rel="manifest" href="assets/blaze/site.webmanifest" />
 </head>
 <body>
+
+  <!-- Ambient floating particles -->
+  <canvas id="particle-canvas"></canvas>
 
   <!-- ====== GLASS NAV ====== -->
   <header class="glass-nav" id="nav">
@@ -27,7 +30,7 @@
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
-        <a href="#certifications">Certificates</a>
+        <a href="#certifications">Certs</a>
         <a href="#contact">Contact</a>
       </nav>
       <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="glass-nav__cta">
@@ -51,7 +54,7 @@
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
-      <a href="#certifications">Certificates</a>
+      <a href="#certifications">Certs</a>
       <a href="#contact">Contact</a>
       <a href="https://github.com/albinnnnn" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
@@ -61,152 +64,180 @@
 
     <!-- ====== HERO ====== -->
     <section class="hero" id="hero">
-      <!-- Interactive wave background (hero only) -->
       <canvas id="wave-canvas"></canvas>
       
       <div class="hero__inner">
         <div class="hero__text">
-          <div class="hero__badge anim-in" data-delay="0">
-            <span class="pulse-dot"></span>
-            Electronics &amp; Computer Science · ML &amp; Embedded Systems
+          <!-- Terminal-style greeting -->
+          <div class="terminal-line anim-in" data-delay="0">
+            <span class="terminal-prompt">~/albin</span>
+            <span class="terminal-cmd" id="typed-greeting"></span>
+            <span class="terminal-cursor">▌</span>
           </div>
-          <div class="hero__badge hero__badge--internship anim-in" data-delay="100">
+          
+          <div class="hero__badge hero__badge--internship anim-in" data-delay="200">
             <span class="pulse-dot pulse-dot--internship"></span>
             Open to Internship Opportunities
           </div>
-          <h1 class="hero__title anim-in" data-delay="200">
+
+          <h1 class="hero__title anim-in" data-delay="300">
             I build <br>
             <span class="hero-rotating-wrap">
-              <span class="hero-rotating" id="hero-rotating">Embedded Systems &amp; IoT.</span>
-              <span class="hero-rotating hero-rotating--next" id="hero-rotating-next"></span>
+              <span class="hero-rotating gradient-text" id="hero-rotating">Embedded Systems &amp; IoT.</span>
+              <span class="hero-rotating hero-rotating--next gradient-text" id="hero-rotating-next"></span>
             </span>
           </h1>
-          <p class="hero__sub anim-in" data-delay="400">
-            Hi, I'm <strong>Albin Jojo</strong>, an Electronics and Computer Science student. I specialize in writing low-level firmware, training machine learning models, and bringing functional hardware prototypes to life.
+
+          <p class="hero__sub anim-in" data-delay="500">
+            3rd Year <strong>Electronics & Computer Engineering</strong> student. I write firmware for ESP32 and Raspberry Pi, train edge AI models in PyTorch, and design digital circuits in Verilog — all to make hardware smarter.
           </p>
-          <div class="hero__buttons anim-in" data-delay="600">
-            <a href="#projects" class="btn-primary">View My Work</a>
+
+          <div class="hero__buttons anim-in" data-delay="700">
+            <a href="#projects" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              See My Work
+            </a>
             <a href="AlbinJojoCV.pdf" download="Albin_Jojo_CV.pdf" id="resume-btn" class="btn-outline">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download Resume
+              Grab My CV
             </a>
           </div>
         </div>
-        <div class="hero__visual anim-in" data-delay="300">
-          <div class="hero__img-wrap">
-            <img src="images/profile.jpg" alt="Albin Jojo" />
-            <div class="hero__orbit"></div>
-            <div class="hero__orbit hero__orbit--2"></div>
-            <div class="hero__float-tag hero__float-tag--1">IOT</div>
-            <div class="hero__float-tag hero__float-tag--2">Embedded</div>
-            <div class="hero__float-tag hero__float-tag--3">AI</div>
+        
+        <div class="hero__profile anim-in" data-delay="600">
+          <div class="hero-profile__img-wrap">
+            <img src="assets/profile.jpg" alt="Albin Jojo - Profile Picture">
           </div>
         </div>
       </div>
-      <div class="hero__scroll-hint anim-in" data-delay="900">
+
+      <div class="hero__scroll-hint anim-in" data-delay="1100">
         <div class="scroll-line"></div>
         <span>scroll</span>
       </div>
     </section>
 
+    <!-- ====== ABOUT ====== -->
     <section class="section" id="about">
       <div class="container">
         <h2 class="section-title scroll-reveal"><span>01</span> About Me</h2>
-        <div class="about-centered">
+        <div class="about-grid">
           <div class="about-content scroll-reveal">
-            <p class="about-lead">I am an Electronics and Computer Science student passionate about bridging the gap between hardware and software.</p>
-            <p>I build intelligent systems where low-level hardware control meets machine learning. From training custom PyTorch models to writing efficient C/C++ code, my goal is always to build practical, real-world solutions. Always eager to learn new technologies and improve my skills.</p>
+            <p class="about-lead">I am a 3rd-year Electronics and Computer Engineering student passionate about bridging the gap between hardware and software.</p>
+            <p>I build intelligent systems where low-level hardware control meets machine learning. From training custom PyTorch models to writing efficient Verilog and C/C++ firmware, my goal is always to build practical, real-world solutions that work at the edge.</p>
           </div>
           
-          <div class="learning-section scroll-reveal">
-            <h3 class="learning-title">Currently Learning:</h3>
-            <ul class="learning-list">
-              <li>
-                <strong>Embedded C &amp; RTOS:</strong> Memory management, pointers, and task scheduling for deterministic systems.
-              </li>
-              <li>
-                <strong>LLM &amp; RAG Systems:</strong> Retrieval-Augmented Generation, web scraping, and building AI pipelines.
-              </li>
-              <li>
-                <strong>Scalable System Design:</strong> Combining hardware, software, and AI components at scale.
-              </li>
-            </ul>
+          <div class="about-cards-row scroll-reveal">
+            <div class="about-card">
+              <h3 class="about-card__title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c6 3 12 0 12 0v-5"/></svg>
+                Education
+              </h3>
+              <p class="about-card__text">
+                <strong>B.Tech in Electronics & Computer Engineering</strong><br>
+                Saintgits College of Engineering, Kottayam<br>
+                <span class="dim-text">2023 – Present · CGPA 7.13</span>
+              </p>
+            </div>
+            <div class="about-card">
+              <h3 class="about-card__title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v18H2z"/><path d="M8 21V3"/><path d="M16 21V3"/><path d="M2 9h20"/><path d="M2 15h20"/></svg>
+                Currently Learning
+              </h3>
+              <ul class="about-card__list">
+                <li><strong>Embedded C & RTOS</strong> — memory management, task scheduling</li>
+                <li><strong>LLM & RAG Systems</strong> — retrieval pipelines, AI agents</li>
+                <li><strong>Scalable System Design</strong> — hardware + software at scale</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ====== PROJECTS ====== -->
-    <section class="section section--dark" id="projects">
+    <section class="section" id="projects">
       <div class="container">
         <h2 class="section-title scroll-reveal"><span>02</span> Selected Work</h2>
 
-        <div class="project scroll-reveal">
-          <div class="project__img">
-            <div class="project__placeholder">
-              <span>🍅 TomatoScan</span>
-            </div>
-            <div class="project__img-overlay"></div>
-          </div>
-          <div class="project__info">
-            <span class="project__label">Edge AI · Computer Vision</span>
-            <h3>Tomato Leaf Disease Edge Classifier</h3>
-            <p>Built a dual-stage detection and classification pipeline (YOLOv8s + MobileNetV3-Large 10-class classifier) exported to FP32 ONNX for fully offline deployment on Raspberry Pi 4B. Achieved ~600 ms per-frame inference with weighted F1 ≈ 0.93 on a 14,500+ image test set.</p>
-            <div class="project__tags">
-              <span>YOLOv8s</span><span>MobileNetV3</span><span>ONNX Runtime</span><span>Raspberry Pi 4B</span><span>Edge AI</span>
-            </div>
-            <a href="https://github.com/albinnnnn/leaf-disease-detector" target="_blank" rel="noopener" class="project__link">View Repository →</a>
-          </div>
-        </div>
+        <div class="projects-grid projects-grid--equal">
 
-        <div class="project project--flip scroll-reveal">
-          <div class="project__img">
-            <img src="images/RFIDproject.jpg" alt="Distributed RFID Attendance System" />
-            <div class="project__img-overlay"></div>
-          </div>
-          <div class="project__info">
-            <span class="project__label project__label--hw">Embedded / IoT</span>
-            <h3>Distributed RFID Attendance System</h3>
-            <p>Architected a 3-node IoT network over MQTT for real-time attendance synchronisation and centralised logging via Google Sheets API. Implemented SPIFFS-backed offline queuing on each node, ensuring zero data loss during Wi-Fi outages with automatic sync on reconnect.</p>
-            <div class="project__tags">
-              <span>ESP32</span><span>MQTT</span><span>SPIFFS</span><span>Google Sheets API</span><span>IoT</span>
+          <div class="project-card scroll-reveal">
+            <div class="project-card__visual">
+              <div class="code-window code-window--small">
+                <div class="code-window__dots"><span></span><span></span><span></span></div>
+                <pre class="code-window__code"><code><span class="code-comment"># YOLOv8s & MobileNetV3</span>
+detector = ort.InferenceSession(<span class="code-str">"leaf.onnx"</span>)
+classifier = ort.InferenceSession(<span class="code-str">"disease.onnx"</span>)</code></pre>
+              </div>
             </div>
-            <a href="https://github.com/albinnnnn/edge-based-rfid-attendance-system" target="_blank" rel="noopener" class="project__link">View Repository →</a>
-          </div>
-        </div>
-
-        <div class="project scroll-reveal">
-          <div class="project__img">
-            <img src="images/smartglassProject.jpg" alt="Smart Reading Glasses" />
-            <div class="project__img-overlay"></div>
-          </div>
-          <div class="project__info">
-            <span class="project__label project__label--hw">Hardware + AI</span>
-            <h3>Smart Reading Glasses — Assistive OCR</h3>
-            <p>Built a wearable offline OCR and Text-to-Speech device on Raspberry Pi Zero W. Adaptive image thresholding improved Tesseract accuracy over baseline. Optimised memory-constrained pipeline to achieve ~2–3 s end-to-end latency per capture with no cloud dependency.</p>
-            <div class="project__tags">
-              <span>RPi Zero W</span><span>Tesseract OCR</span><span>Bluetooth</span><span>Text-to-Speech</span><span>Linux</span>
+            <div class="project-card__content">
+              <div class="project-card__header">
+                <span class="project__label">Edge AI / Computer Vision</span>
+                <a href="https://github.com/albinnnnn/leaf-disease-detector" target="_blank" rel="noopener" class="project-card__ghlink" title="View on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+                </a>
+              </div>
+              <h4>Tomato Leaf Disease Edge Classifier</h4>
+              <p>Built a dual-stage pipeline (YOLOv8s + MobileNetV3-Large 10-class classifier) exported to FP32 ONNX for fully offline deployment on Raspberry Pi 4B. Achieved ~600 ms per-frame inference with weighted F1 of 0.93 on a 14,500+ image test set.</p>
+              <div class="project__tags">
+                <span>YOLOv8s</span><span>MobileNetV3</span><span>ONNX Runtime</span><span>Raspberry Pi 4B</span>
+              </div>
             </div>
-            <a href="https://github.com/albinnnnn/ai-assisted-smart-glasses" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
-        </div>
 
-        <div class="project project--flip scroll-reveal">
-          <div class="project__img">
-            <img src="images/waveform.png" alt="UART Transceiver Waveform" />
-            <div class="project__img-overlay"></div>
-          </div>
-          <div class="project__info">
-            <span class="project__label">Digital Design</span>
-            <h3>UART Transceiver with Baud Rate Generator</h3>
-            <p>Designed a complete UART TX/RX module in Verilog from scratch, including a parameterised baud rate generator derived from a configurable reference clock. Verified start/stop bit framing, mid-bit RX sampling, and serial-to-parallel conversion via testbench-based functional simulation.</p>
-            <div class="project__tags">
-              <span>Verilog</span><span>Digital Design</span><span>UART</span><span>Icarus Verilog</span><span>GTKWave</span>
+          <div class="project-card scroll-reveal">
+            <div class="project-card__visual" style="background-image: url('assets/waveform.png'); background-size: cover; background-position: center left;"></div>
+            <div class="project-card__content">
+              <div class="project-card__header">
+                <span class="project__label">Digital Design</span>
+                <a href="https://github.com/albinnnnn/verilog-uart-fsm" target="_blank" rel="noopener" class="project-card__ghlink" title="View on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+                </a>
+              </div>
+              <h4>FSM-Based UART Transceiver</h4>
+              <p>Designed a complete UART TX/RX module in Verilog from scratch, including a parameterised baud rate generator with 16x oversampling. Verified start/stop bit framing and serial-to-parallel conversion via testbench simulation.</p>
+              <div class="project__tags">
+                <span>Verilog</span><span>FSM</span><span>Icarus Verilog</span><span>GTKWave</span>
+              </div>
             </div>
-            <a href="https://github.com/albinnnnn/verilog-uart-fsm" target="_blank" rel="noopener" class="project__link">View Repository →</a>
           </div>
-        </div>
 
+          <div class="project-card scroll-reveal">
+            <div class="project-card__visual" style="background-image: url('assets/RFIDproject.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="project-card__content">
+              <div class="project-card__header">
+                <span class="project__label">Embedded / IoT</span>
+                <a href="https://github.com/albinnnnn/edge-based-rfid-attendance-system" target="_blank" rel="noopener" class="project-card__ghlink" title="View on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+                </a>
+              </div>
+              <h4>Distributed RFID Attendance System</h4>
+              <p>Architected a 3-node IoT network over MQTT for real-time attendance synchronisation and centralised logging via Google Sheets API. Implemented SPIFFS-backed offline queuing ensuring zero data loss during Wi-Fi outages.</p>
+              <div class="project__tags">
+                <span>ESP32</span><span>MQTT</span><span>SPIFFS</span><span>Google Sheets API</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card scroll-reveal">
+            <div class="project-card__visual" style="background-image: url('assets/smartglassProject.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="project-card__content">
+              <div class="project-card__header">
+                <span class="project__label">Hardware + AI</span>
+                <a href="https://github.com/albinnnnn/ai-assisted-smart-glasses" target="_blank" rel="noopener" class="project-card__ghlink" title="View on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+                </a>
+              </div>
+              <h4>Smart Reading Glasses — Assistive OCR</h4>
+              <p>Built a wearable offline OCR and Text-to-Speech device on Raspberry Pi Zero W. Adaptive image thresholding improved Tesseract accuracy. Optimised memory-constrained pipeline to achieve ~2-3s end-to-end latency.</p>
+              <div class="project__tags">
+                <span>RPi Zero W</span><span>Tesseract OCR</span><span>Bluetooth</span><span>Text-to-Speech</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
@@ -215,138 +246,47 @@
       <div class="container">
         <h2 class="section-title scroll-reveal"><span>03</span> Tech Stack</h2>
         <div class="tech-grid">
-          
-          <!-- Category 1: Languages -->
+          <div class="tech-card scroll-reveal">
+            <h3 class="tech-card__title">Hardware</h3>
+            <div class="tech-card__items">
+              <div class="tech-pill">ESP32</div>
+              <div class="tech-pill">Raspberry Pi</div>
+              <div class="tech-pill">Arduino</div>
+              <div class="tech-pill">SPI / I2C / UART</div>
+              <div class="tech-pill">Sensors</div>
+            </div>
+          </div>
+          <div class="tech-card scroll-reveal">
+            <h3 class="tech-card__title">AI / ML</h3>
+            <div class="tech-card__items">
+              <div class="tech-pill">PyTorch</div>
+              <div class="tech-pill">YOLOv8</div>
+              <div class="tech-pill">MobileNetV3</div>
+              <div class="tech-pill">OpenCV</div>
+              <div class="tech-pill">ONNX Runtime</div>
+              <div class="tech-pill">Tesseract OCR</div>
+            </div>
+          </div>
           <div class="tech-card scroll-reveal">
             <h3 class="tech-card__title">Languages</h3>
             <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/python'); mask-image:url('https://cdn.simpleicons.org/python');"></span>
-                <span>Python</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/cplusplus'); mask-image:url('https://cdn.simpleicons.org/cplusplus');"></span>
-                <span>C / C++</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/dart'); mask-image:url('https://cdn.simpleicons.org/dart');"></span>
-                <span>Dart</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/374167/verilog.svg'); mask-image:url('https://www.svgrepo.com/show/374167/verilog.svg');"></span>
-                <span>Verilog</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/html5'); mask-image:url('https://cdn.simpleicons.org/html5');"></span>
-                <span>HTML/CSS</span>
-              </div>
+              <div class="tech-pill">C / C++</div>
+              <div class="tech-pill">Python</div>
+              <div class="tech-pill">Verilog</div>
+              <div class="tech-pill">Bash</div>
+              <div class="tech-pill">HTML/CSS</div>
             </div>
           </div>
-
-          <!-- Category 2: Machine Learning & CV -->
-          <div class="tech-card scroll-reveal" style="transition-delay: 0.1s;">
-            <h3 class="tech-card__title">ML &amp; Computer Vision</h3>
-            <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/pytorch'); mask-image:url('https://cdn.simpleicons.org/pytorch');"></span>
-                <span>PyTorch / CNNs</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/opencv'); mask-image:url('https://cdn.simpleicons.org/opencv');"></span>
-                <span>OpenCV</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/keras'); mask-image:url('https://cdn.simpleicons.org/keras');"></span>
-                <span>YOLO</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg'); mask-image:url('https://www.svgrepo.com/show/443422/text-box.svg');"></span>
-                <span>Tesseract OCR</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/395175/onnx.svg'); mask-image:url('https://www.svgrepo.com/show/395175/onnx.svg');"></span>
-                <span>ONNX Runtime</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category 3: Data Processing -->
-          <div class="tech-card scroll-reveal" style="transition-delay: 0.2s;">
-            <h3 class="tech-card__title">Data Processing</h3>
-            <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/numpy'); mask-image:url('https://cdn.simpleicons.org/numpy');"></span>
-                <span>NumPy</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/pandas'); mask-image:url('https://cdn.simpleicons.org/pandas');"></span>
-                <span>Pandas</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/matplotlib'); mask-image:url('https://cdn.simpleicons.org/matplotlib');"></span>
-                <span>Matplotlib</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category 4: Embedded & IoT -->
           <div class="tech-card scroll-reveal">
-            <h3 class="tech-card__title">Embedded &amp; IoT</h3>
+            <h3 class="tech-card__title">Tools & Systems</h3>
             <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/espressif'); mask-image:url('https://cdn.simpleicons.org/espressif');"></span>
-                <span>ESP32</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/raspberrypi'); mask-image:url('https://cdn.simpleicons.org/raspberrypi');"></span>
-                <span>Raspberry Pi</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/arduino'); mask-image:url('https://cdn.simpleicons.org/arduino');"></span>
-                <span>Sensors</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/microchiptechnology'); mask-image:url('https://cdn.simpleicons.org/microchiptechnology');"></span>
-                <span>SPI / I2C / UART</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category 5: Electronics / EDA -->
-          <div class="tech-card scroll-reveal" style="transition-delay: 0.1s;">
-            <h3 class="tech-card__title">Electronics / EDA</h3>
-            <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon icon-dark-invert" style="-webkit-mask-image:url('https://www.svgrepo.com/show/355325/virtuoso.svg'); mask-image:url('https://www.svgrepo.com/show/355325/virtuoso.svg');"></span>
-                <span>Cadence</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/mathworks'); mask-image:url('https://cdn.simpleicons.org/mathworks');"></span>
-                <span>MATLAB</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/kicad'); mask-image:url('https://cdn.simpleicons.org/kicad');"></span>
-                <span>KiCad</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category 6: Tools -->
-          <div class="tech-card scroll-reveal" style="transition-delay: 0.2s;">
-            <h3 class="tech-card__title">Tools</h3>
-            <div class="tech-card__items">
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/git'); mask-image:url('https://cdn.simpleicons.org/git');"></span>
-                <span>Git / GitHub</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/linux'); mask-image:url('https://cdn.simpleicons.org/linux');"></span>
-                <span>Linux</span>
-              </div>
-              <div class="tech-pill">
-                <span class="tech-icon" style="-webkit-mask-image:url('https://cdn.simpleicons.org/figma'); mask-image:url('https://cdn.simpleicons.org/figma');"></span>
-                <span>Figma</span>
-              </div>
+              <div class="tech-pill">Git / GitHub</div>
+              <div class="tech-pill">Linux</div>
+              <div class="tech-pill">PlatformIO</div>
+              <div class="tech-pill">KiCad</div>
+              <div class="tech-pill">Icarus Verilog</div>
+              <div class="tech-pill">GTKWave</div>
+              <div class="tech-pill">MATLAB</div>
             </div>
           </div>
         </div>
@@ -354,7 +294,7 @@
     </section>
 
     <!-- ====== EXPERIENCE ====== -->
-    <section class="section section--dark" id="experience">
+    <section class="section" id="experience">
       <div class="container">
         <h2 class="section-title scroll-reveal"><span>04</span> Experience</h2>
         <div class="experience-timeline">
@@ -364,18 +304,19 @@
               <div class="experience-card__header">
                 <div>
                   <h3>Embedded Systems Intern</h3>
-                  <span class="experience-card__company">Keltron</span>
+                  <span class="experience-card__company">Keltron — Kerala State Electronics Development Corporation</span>
                 </div>
-                <span class="experience-card__date">2 Weeks · 2024</span>
+                <span class="experience-card__date">2024</span>
               </div>
               <ul class="experience-card__list">
-                <li>Worked on microcontroller-based hardware interfacing and real-world embedded applications.</li>
-                <li>Gained hands-on exposure to industry workflows in electronics system development.</li>
+                <li>Completed structured industry training on firmware development for ESP32 and Raspberry Pi at a state-owned electronics PSU.</li>
+                <li>Gained practical exposure to I2C, UART, and SPI protocol implementation and industrial sensor-actuator interfacing.</li>
               </ul>
               <div class="experience-card__tags">
-                <span>Microcontrollers</span>
-                <span>Hardware Interfacing</span>
-                <span>Embedded Systems</span>
+                <span>ESP32</span>
+                <span>I2C / UART / SPI</span>
+                <span>Firmware</span>
+                <span>Raspberry Pi</span>
               </div>
             </div>
           </div>
@@ -386,88 +327,80 @@
     <!-- ====== CERTIFICATIONS ====== -->
     <section class="section" id="certifications">
       <div class="container">
-        <h2 class="section-title scroll-reveal"><span>05</span> Certifications &amp; Training</h2>
-        <div class="cert-grid">
+        <h2 class="section-title scroll-reveal"><span>05</span> Certifications & Training</h2>
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
           
-          <div class="cert-card scroll-reveal">
-            <div class="cert-card__header">
-              <h4>Winter Technical Training Programme</h4>
-              <span class="cert-card__date">Feb 2026</span>
+          <div class="timeline-node scroll-reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h4>Winter Technical Training — Drone Technology & Remote Sensing</h4>
+                <span class="timeline-date">Feb 2026</span>
+              </div>
+              <span class="timeline-org">India Space Lab</span>
+              <p class="timeline-desc">Sensor fusion, telemetry communication, and UAV systems integration.</p>
             </div>
-            <span class="cert-card__org">India Space Lab</span>
-            <p class="cert-card__desc">Drone Technology, CanSat/CubeSat, Rocketry, and Remote Sensing (GIS).</p>
           </div>
 
-          <div class="cert-card scroll-reveal" style="transition-delay: 0.1s;">
-            <div class="cert-card__header">
-              <h4>Robotic Process Automation Workshop</h4>
-              <span class="cert-card__date">Feb 2026</span>
+          <div class="timeline-node scroll-reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h4>Linux & Shell Scripting — Professional Certificate</h4>
+                <span class="timeline-date">Oct 2025</span>
+              </div>
+              <span class="timeline-org">IBM · Coursera</span>
+              <p class="timeline-desc">Bash scripting, Linux system administration, and automation workflows.</p>
             </div>
-            <span class="cert-card__org">Automation Anywhere</span>
-            <p class="cert-card__desc">Introduction to basic RPA concepts and simple bot creation workflows.</p>
           </div>
 
-          <div class="cert-card scroll-reveal" style="transition-delay: 0.2s;">
-            <div class="cert-card__header">
-              <h4>Intro to Linux Commands &amp; Shell Scripting</h4>
-              <span class="cert-card__date">Oct 2025</span>
-            </div>
-            <span class="cert-card__org">IBM · Coursera</span>
-            <p class="cert-card__desc">Fundamentals of the Linux terminal, file operations, and basic shell scripting.</p>
-          </div>
-
-          <div class="cert-card scroll-reveal" style="transition-delay: 0.3s;">
-            <div class="cert-card__header">
-              <h4>Hands-on Workshop on Vega Processor</h4>
-              <span class="cert-card__date">May 2024</span>
-            </div>
-            <span class="cert-card__org">IIC &amp; CDAC Trivandrum</span>
-            <p class="cert-card__desc">Programming and sensor interfacing using the Vega RISC-V board.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section section--dark" id="contact">
-      <div class="container">
-        <h2 class="section-title scroll-reveal"><span>06</span> Get In Touch</h2>
-        <div class="about-centered">
-          <div class="about-content scroll-reveal">
-            <p class="about-lead">I'm always open to new challenges. Whether you need an intelligent hardware prototype or robust low-level software, let's connect.</p>
-            <div class="contact-methods" style="display:flex; flex-wrap:wrap; gap:1.25rem; margin-top:2rem;">
-              <a href="mailto:albinjojo4@gmail.com" class="contact-tile" style="flex:1; min-width:200px;">
-                <span class="contact-tile__icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                </span>
-                <strong>Email</strong>
-                <span>albinjojo4@gmail.com</span>
-              </a>
-              <a href="tel:+918301026124" class="contact-tile" style="flex:1; min-width:200px;">
-                <span class="contact-tile__icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </span>
-                <strong>Phone</strong>
-                <span>+91 83010 26124</span>
-              </a>
-              <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="contact-tile" style="flex:1; min-width:200px;">
-                <span class="contact-tile__icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </span>
-                <strong>LinkedIn</strong>
-                <span>linkedin.com/in/albinjojo</span>
-              </a>
+          <div class="timeline-node scroll-reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h4>Vega Processor Workshop — SoC & RISC-V Architecture</h4>
+                <span class="timeline-date">May 2024</span>
+              </div>
+              <span class="timeline-org">CDAC Trivandrum</span>
+              <p class="timeline-desc">RISC-V ISA fundamentals, SoC architecture, and sensor interfacing on the Vega board.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <footer class="footer">
+  <footer class="footer" id="contact">
     <div class="container">
-      <span>© 2026 Albin Jojo</span>
+      <div class="footer__top">
+        <div class="footer__cta">
+          <h2 class="footer__heading">Let's Connect</h2>
+          <p class="footer__sub">Got a project that needs firmware, edge AI, or just someone who enjoys making hardware smarter? Reach out.</p>
+        </div>
+        <div class="footer__links">
+          <a href="mailto:albinjojo4@gmail.com" class="footer__link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            albinjojo4@gmail.com
+          </a>
+          <a href="tel:+918301026124" class="footer__link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91 83010 26124
+          </a>
+          <a href="https://linkedin.com/in/albinjojo" target="_blank" rel="noopener" class="footer__link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/albinnnnn" target="_blank" rel="noopener" class="footer__link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>Built with caffeine & solder fumes · &copy; 2026 Albin Jojo</span>
+      </div>
     </div>
   </footer>
 

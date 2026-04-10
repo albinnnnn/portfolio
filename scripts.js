@@ -1,5 +1,6 @@
 // =====================================================
-// SCRIPTS — Glass nav, scroll-reveal, cursor particles
+// SCRIPTS — Typing effect, ambient particles, wave bg,
+// glass nav, scroll-reveal, theme toggle
 // =====================================================
 (() => {
   'use strict';
@@ -15,7 +16,6 @@
   const htmlEl     = document.documentElement;
 
   // ---------- THEME TOGGLE ----------
-  // Restore saved theme or default to dark
   const savedTheme = localStorage.getItem('theme') || 'dark';
   htmlEl.setAttribute('data-theme', savedTheme);
 
@@ -26,13 +26,65 @@
     localStorage.setItem('theme', next);
   });
 
-
-
   // ---------- HERO ENTRANCE (staggered) ----------
   document.querySelectorAll('.anim-in').forEach(el => {
     const delay = parseInt(el.dataset.delay || 0);
     el.style.animationDelay = `${delay}ms`;
   });
+
+  // ---------- TYPING EFFECT ----------
+  const typedEl = document.getElementById('typed-greeting');
+  if (typedEl) {
+    const text = ' cat intro.txt';
+    let i = 0;
+    function typeChar() {
+      if (i < text.length) {
+        typedEl.textContent += text[i];
+        i++;
+        setTimeout(typeChar, 60 + Math.random() * 40);
+      }
+    }
+    setTimeout(typeChar, 800);
+  }
+
+  // ---------- SLIDE-MASK HERO TEXT ROTATION ----------
+  const heroRotating = document.getElementById('hero-rotating');
+  const heroNext = document.getElementById('hero-rotating-next');
+  const heroWrap = heroRotating?.closest('.hero-rotating-wrap');
+
+  if (heroRotating && heroNext && heroWrap) {
+    const phrases = [
+      "Embedded Systems & IoT.",
+      "Machine Learning Models.",
+      "Intelligent Hardware.",
+    ];
+    let phraseIndex = 0;
+    const HOLD = 3000;
+    const SLIDE_MS = 650;
+
+    setInterval(() => {
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      heroNext.textContent = phrases[phraseIndex];
+      heroWrap.classList.add('sliding');
+
+      setTimeout(() => {
+        // Disable transitions so the reset is instant (no visible snap-back)
+        heroRotating.style.transition = 'none';
+        heroNext.style.transition = 'none';
+
+        // Update current text and remove sliding state
+        heroRotating.textContent = phrases[phraseIndex];
+        heroWrap.classList.remove('sliding');
+
+        // Force a reflow so the browser applies the instant reset
+        void heroRotating.offsetHeight;
+
+        // Re-enable transitions for the next cycle
+        heroRotating.style.transition = '';
+        heroNext.style.transition = '';
+      }, SLIDE_MS);
+    }, HOLD + SLIDE_MS);
+  }
 
   // ---------- MOBILE MENU ----------
   function toggleMob() {
@@ -101,11 +153,86 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => io.observe(el));
 
+  // ---------- AMBIENT PARTICLE BACKGROUND ----------
+  const pCanvas = document.getElementById('particle-canvas');
+  if (pCanvas) {
+    const pCtx = pCanvas.getContext('2d');
+    let pW, pH;
+    const particles = [];
+    const PARTICLE_COUNT = 50;
+
+    function pResize() {
+      pW = pCanvas.width = window.innerWidth;
+      pH = pCanvas.height = window.innerHeight;
+    }
+    pResize();
+    window.addEventListener('resize', pResize);
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * pW;
+        this.y = Math.random() * pH;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > pW) this.speedX *= -1;
+        if (this.y < 0 || this.y > pH) this.speedY *= -1;
+      }
+      draw() {
+        const isDark = htmlEl.getAttribute('data-theme') !== 'light';
+        pCtx.beginPath();
+        pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        pCtx.fillStyle = isDark
+          ? `rgba(167, 139, 250, ${this.opacity})`
+          : `rgba(124, 58, 237, ${this.opacity * 0.6})`;
+        pCtx.fill();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+    function drawLines() {
+      const isDark = htmlEl.getAttribute('data-theme') !== 'light';
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            const alpha = (1 - dist / 150) * 0.15;
+            pCtx.beginPath();
+            pCtx.moveTo(particles[i].x, particles[i].y);
+            pCtx.lineTo(particles[j].x, particles[j].y);
+            pCtx.strokeStyle = isDark
+              ? `rgba(167, 139, 250, ${alpha})`
+              : `rgba(124, 58, 237, ${alpha * 0.5})`;
+            pCtx.lineWidth = 0.5;
+            pCtx.stroke();
+          }
+        }
+      }
+    }
+
+    function pFrame() {
+      pCtx.clearRect(0, 0, pW, pH);
+      particles.forEach(p => { p.update(); p.draw(); });
+      drawLines();
+      requestAnimationFrame(pFrame);
+    }
+
+    if (!matchMedia('(prefers-reduced-motion:reduce)').matches) pFrame();
+  }
+
   // ---------- FLOWING WAVE BACKGROUND (hero only) ----------
   const canvas = document.getElementById('wave-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
   let W, H;
   let mx = -9999, my = -9999;
   let targetMx = -9999, targetMy = -9999;
@@ -128,130 +255,62 @@
   });
   addEventListener('mouseleave', () => { targetMx = -9999; targetMy = -9999; });
 
-  // Wave parameters
-  const NUM_LINES = 45;       // number of wave lines (tighter band)
-  const POINTS = 220;         // points per line (smoothness)
-  const BASE_AMP = 70;        // base wave amplitude (bigger mountain peaks)
-  const MOUSE_RADIUS = 250;   // radius of mouse influence
-  const MOUSE_AMP = 45;       // extra amplitude from mouse
-
+  const NUM_LINES = 40;
+  const POINTS = 200;
+  const BASE_AMP = 65;
+  const MOUSE_RADIUS = 250;
+  const MOUSE_AMP = 40;
   let time = 0;
 
   function frame() {
     ctx.clearRect(0, 0, W, H);
-
-    // Smooth mouse
     if (targetMx > -9000) {
       mx += (targetMx - mx) * 0.06;
       my += (targetMy - my) * 0.06;
-    } else {
-      mx = -9999;
-      my = -9999;
-    }
-
+    } else { mx = -9999; my = -9999; }
     time += 0.003;
 
     const isDark = htmlEl.getAttribute('data-theme') !== 'light';
-
-    // Center of the wave band — in the lower-center area like the reference
     const centerY = H * 0.65;
     const bandHeight = H * 0.35;
 
     for (let i = 0; i < NUM_LINES; i++) {
-      const t = i / (NUM_LINES - 1);   // 0..1
-      // Vertical position of this line in the band
+      const t = i / (NUM_LINES - 1);
       const lineY = centerY - bandHeight / 2 + t * bandHeight;
-
       ctx.beginPath();
 
       for (let p = 0; p <= POINTS; p++) {
-        const px = (p / POINTS) * (W + 80) - 40;  // slight overshoot
-        const nx = p / POINTS;   // normalized x 0..1
-
-        // Multiple sine waves for dramatic mountain-like peaks
+        const px = (p / POINTS) * (W + 80) - 40;
+        const nx = p / POINTS;
         let wave = Math.sin(nx * 3.8 + time * 1.5 + t * 1.8) * BASE_AMP
                  + Math.sin(nx * 6.5 - time * 1.0 + t * 3.0) * BASE_AMP * 0.4
                  + Math.cos(nx * 2.0 + time * 2.2 + t * 1.0) * BASE_AMP * 0.55
                  + Math.sin(nx * 10 + time * 0.7 + t * 4.5) * BASE_AMP * 0.1;
-
-        // Scale wave: more movement at center of band, less at edges
-        const centerDist = Math.abs(t - 0.5) * 2; // 0 at center, 1 at edges
+        const centerDist = Math.abs(t - 0.5) * 2;
         wave *= 1 - centerDist * 0.5;
-
-        // Mouse influence
         if (mx > -9000) {
-          const dxm = px - mx;
-          const dym = lineY + wave - my;
+          const dxm = px - mx, dym = lineY + wave - my;
           const dm = Math.sqrt(dxm * dxm + dym * dym);
           if (dm < MOUSE_RADIUS) {
             const influence = 1 - dm / MOUSE_RADIUS;
             wave -= influence * influence * MOUSE_AMP;
           }
         }
-
         const py = lineY + wave;
         if (p === 0) ctx.moveTo(px, py);
         else ctx.lineTo(px, py);
       }
 
-      // Alpha: stronger at center of band, fainter at edges
       const edgeFade = 1 - Math.pow(Math.abs(t - 0.5) * 2, 1.5);
-      const baseAlpha = isDark ? 0.06 + edgeFade * 0.30 : 0.04 + edgeFade * 0.18;
-
-      // Single color purple, shades via alpha
-      if (isDark) {
-        ctx.strokeStyle = `rgba(168, 85, 247, ${baseAlpha})`;
-      } else {
-        ctx.strokeStyle = `rgba(124, 58, 237, ${baseAlpha})`;
-      }
-
+      const baseAlpha = isDark ? 0.05 + edgeFade * 0.25 : 0.03 + edgeFade * 0.15;
+      ctx.strokeStyle = isDark
+        ? `rgba(167, 139, 250, ${baseAlpha})`
+        : `rgba(124, 58, 237, ${baseAlpha})`;
       ctx.lineWidth = isDark ? 1.0 : 0.8;
       ctx.stroke();
     }
-
     requestAnimationFrame(frame);
   }
 
   if (!matchMedia('(prefers-reduced-motion:reduce)').matches) frame();
-
-  // ---------- SLIDE-MASK HERO HEADLINE ----------
-  const heroRotating = document.getElementById('hero-rotating');
-  const heroNext = document.getElementById('hero-rotating-next');
-  const heroWrap = heroRotating?.parentElement;
-  
-  if (heroRotating && heroNext && heroWrap) {
-    const phrases = ["Embedded Systems & IoT.", "Machine Learning Models.", "Intelligent Hardware."];
-    let phraseIndex = 0;
-    const HOLD_TIME = 3000;
-    const TRANSITION_MS = 650;
-
-    function slideNext() {
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      heroNext.textContent = phrases[phraseIndex];
-
-      // Trigger slide
-      heroWrap.classList.add('sliding');
-
-      setTimeout(() => {
-        // Kill transitions so the swap is invisible
-        heroRotating.style.transition = 'none';
-        heroNext.style.transition = 'none';
-
-        // Swap: put the new phrase in the main span, reset classes
-        heroRotating.textContent = phrases[phraseIndex];
-        heroNext.textContent = '';
-        heroWrap.classList.remove('sliding');
-
-        // Force reflow so the browser applies the reset instantly
-        void heroRotating.offsetWidth;
-
-        // Re-enable transitions for the next cycle
-        heroRotating.style.transition = '';
-        heroNext.style.transition = '';
-      }, TRANSITION_MS + 50);
-    }
-
-    setInterval(slideNext, HOLD_TIME + TRANSITION_MS);
-  }
-
 })();
