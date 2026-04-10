@@ -5,6 +5,26 @@
 (() => {
   'use strict';
 
+  // ---------- LENIS SMOOTH SCROLL ----------
+  let lenis;
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.1, // Smooth but structurally stable parameter
+      wheelMultiplier: 1,
+    });
+  }
+
+  // Smooth scrollbar dragging
+  let scrollbarScrolling = false;
+  window.addEventListener('scroll', () => {
+    if (lenis && !lenis.isScrolling && !scrollbarScrolling) {
+      scrollbarScrolling = true;
+      lenis.scrollTo(window.scrollY, { duration: 0.5 });
+      setTimeout(() => { scrollbarScrolling = false; }, 100);
+    }
+  }, { passive: true });
+
   // ---------- DOM ----------
   const glassNav   = document.querySelector('.glass-nav');
   const burger     = document.querySelector('.glass-nav__burger');
@@ -135,8 +155,12 @@
       const t = document.querySelector(href);
       if (!t) return;
       e.preventDefault();
-      const top = t.getBoundingClientRect().top + scrollY - 90;
-      scrollTo({ top, behavior: 'smooth' });
+      if (typeof lenis !== 'undefined' && lenis) {
+        lenis.scrollTo(t, { offset: -90 });
+      } else {
+        const top = t.getBoundingClientRect().top + scrollY - 90;
+        scrollTo({ top, behavior: 'smooth' });
+      }
       history.pushState?.(null, null, href);
     });
   });
