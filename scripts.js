@@ -15,15 +15,7 @@
     });
   }
 
-  // Smooth scrollbar dragging
-  let scrollbarScrolling = false;
-  window.addEventListener('scroll', () => {
-    if (lenis && !lenis.isScrolling && !scrollbarScrolling) {
-      scrollbarScrolling = true;
-      lenis.scrollTo(window.scrollY, { duration: 0.5 });
-      setTimeout(() => { scrollbarScrolling = false; }, 100);
-    }
-  }, { passive: true });
+
 
   // ---------- DOM ----------
   const glassNav   = document.querySelector('.glass-nav');
@@ -34,6 +26,60 @@
   const sections   = document.querySelectorAll('.section, .hero');
   const themeToggle = document.querySelector('.theme-toggle');
   const htmlEl     = document.documentElement;
+
+  // ---------- NAV CURSOR GLOW ----------
+  let navTargetX = 0, navTargetY = 0;
+  let navCurrentX = 0, navCurrentY = 0;
+  let navIsHovering = false;
+  let autoSweepTime = 0;
+
+  glassNav?.addEventListener('mouseenter', (e) => {
+    navIsHovering = true;
+    const rect = glassNav.getBoundingClientRect();
+    navTargetX = e.clientX - rect.left;
+    navTargetY = e.clientY - rect.top;
+  });
+
+  glassNav?.addEventListener('mousemove', (e) => {
+    if (!navIsHovering) return;
+    const rect = glassNav.getBoundingClientRect();
+    navTargetX = e.clientX - rect.left;
+    navTargetY = e.clientY - rect.top;
+  });
+
+  glassNav?.addEventListener('mouseleave', () => {
+    navIsHovering = false;
+  });
+
+  function navGlowLoop() {
+    if (glassNav) {
+      if (!navIsHovering) {
+        autoSweepTime += 0.006;
+        const rect = glassNav.getBoundingClientRect();
+        const center = rect.width / 2;
+        const sweepAmp = rect.width * 0.45;
+        navTargetX = center + Math.sin(autoSweepTime) * sweepAmp;
+        navTargetY = rect.height / 2;
+        
+        // initialize current pos instantly on first load
+        if (navCurrentX === 0 && navCurrentY === 0) {
+          navCurrentX = navTargetX;
+          navCurrentY = navTargetY;
+        }
+      }
+
+      const dx = navTargetX - navCurrentX;
+      const dy = navTargetY - navCurrentY;
+      
+      navCurrentX += dx * 0.045; 
+      navCurrentY += dy * 0.045;
+      
+      glassNav.style.setProperty('--mouse-x', `${navCurrentX}px`);
+      glassNav.style.setProperty('--mouse-y', `${navCurrentY}px`);
+    }
+    requestAnimationFrame(navGlowLoop);
+  }
+  if (glassNav) requestAnimationFrame(navGlowLoop);
 
   // ---------- THEME TOGGLE ----------
   const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -110,19 +156,27 @@
   function toggleMob() {
     const open = burger.classList.toggle('open');
     mobOverlay.classList.toggle('open');
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
+    } else {
+      document.body.style.overflow = '';
+      if (lenis) lenis.start();
+    }
   }
   burger?.addEventListener('click', toggleMob);
   mobLinks.forEach(l => l.addEventListener('click', () => {
     burger.classList.remove('open');
     mobOverlay.classList.remove('open');
     document.body.style.overflow = '';
+    if (lenis) lenis.start();
   }));
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       burger?.classList.remove('open');
       mobOverlay?.classList.remove('open');
       document.body.style.overflow = '';
+      if (lenis) lenis.start();
     }
   });
 
@@ -151,11 +205,20 @@
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-      if (href === '#') return;
+      if (href === '#') {
+        e.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(0);
+        } else {
+          scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        history.pushState?.(null, null, href);
+        return;
+      }
       const t = document.querySelector(href);
       if (!t) return;
       e.preventDefault();
-      if (typeof lenis !== 'undefined' && lenis) {
+      if (lenis) {
         lenis.scrollTo(t, { offset: -90 });
       } else {
         const top = t.getBoundingClientRect().top + scrollY - 90;
@@ -260,6 +323,15 @@
   let W, H;
   let mx = -9999, my = -9999;
   let targetMx = -9999, targetMy = -9999;
+  
+  let waveVisible = true;
+  if ('IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver(entries => {
+      waveVisible = entries[0].isIntersecting;
+    }, { threshold: 0 });
+    const heroEl = document.getElementById('hero');
+    if (heroEl) heroObserver.observe(heroEl);
+  }
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -287,6 +359,10 @@
   let time = 0;
 
   function frame() {
+    if (!waveVisible) {
+      requestAnimationFrame(frame);
+      return;
+    }
     ctx.clearRect(0, 0, W, H);
     if (targetMx > -9000) {
       mx += (targetMx - mx) * 0.06;
