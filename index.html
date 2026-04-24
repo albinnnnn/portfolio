@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Albin Jojo — Firmware & Edge AI</title>
   <meta name="description" content="Albin Jojo — Embedded Systems, Edge AI, and IoT. I write firmware, train models, and ship hardware." />
+  <meta property="og:title" content="Albin Jojo — Firmware & Edge AI" />
+  <meta property="og:description" content="Embedded Systems, Edge AI, and IoT engineer. I write firmware, train models, and ship hardware." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#a78bfa" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -97,7 +101,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               See My Work
             </a>
-            <a href="AlbinJojoCV.pdf" download="Albin_Jojo_CV.pdf" id="resume-btn" class="btn-outline">
+            <a href="assets/AlbinJojoCV.pdf" download="AlbinJojoResume.pdf" id="resume-btn" class="btn-outline">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Grab My CV
             </a>
@@ -106,7 +110,7 @@
         
         <div class="hero__profile anim-in" data-delay="600">
           <div class="hero-profile__img-wrap">
-            <img src="assets/profile.jpg" alt="Albin Jojo - Profile Picture">
+            <img src="assets/profile.jpg" alt="Albin Jojo - Profile Picture" loading="eager">
           </div>
         </div>
       </div>
@@ -233,6 +237,23 @@ classifier = ort.InferenceSession(<span class="code-str">"disease.onnx"</span>)<
               <p>Built a wearable offline OCR and Text-to-Speech device on Raspberry Pi Zero W. Adaptive image thresholding improved Tesseract accuracy. Optimised memory-constrained pipeline to achieve ~2-3s end-to-end latency.</p>
               <div class="project__tags">
                 <span>RPi Zero W</span><span>Tesseract OCR</span><span>Bluetooth</span><span>Text-to-Speech</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card scroll-reveal">
+            <div class="project-card__visual" style="background-image: url('assets/bashSS.png'); background-size: cover; background-position: center left;"></div>
+            <div class="project-card__content">
+              <div class="project-card__header">
+                <span class="project__label">AI / Developer Tool</span>
+                <a href="https://github.com/albinnnnn/bashly-cli" target="_blank" rel="noopener" class="project-card__ghlink" title="View on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.82-.26.82-.57v-2.23c-3.34.73-4.04-1.42-4.04-1.42a3.18 3.18 0 00-1.34-1.76c-1.08-.74.09-.72.09-.72a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.6c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.32 3.3 1.23a11.38 11.38 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.24 3.22c0 4.61-2.81 5.63-5.48 5.93a2.86 2.86 0 01.82 2.22v3.29c0 .31.22.69.82.57A12 12 0 0012 .3z"/></svg>
+                </a>
+              </div>
+              <h4>Bashly — AI Terminal Assistant</h4>
+              <p>An AI-powered terminal assistant that translates plain English into safe, executable shell commands. Features cross-environment support (Windows, Linux, embedded devices) and a custom regex-based danger detection model to block destructive operations.</p>
+              <div class="project__tags">
+                <span>Python</span><span>OpenRouter API</span><span>PyPI</span><span>CLI</span><span>8 Environments</span>
               </div>
             </div>
           </div>
@@ -393,6 +414,11 @@ classifier = ort.InferenceSession(<span class="code-str">"disease.onnx"</span>)<
       </div>
     </div>
   </footer>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>

@@ -9,10 +9,16 @@
   let lenis;
   if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
-      autoRaf: true,
-      lerp: 0.1, // Smooth but structurally stable parameter
+      lerp: 0.1,
       wheelMultiplier: 1,
     });
+
+    // Lenis 1.1.13 requires a manual raf loop (no autoRaf option)
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
   }
 
 
@@ -23,7 +29,7 @@
   const mobOverlay = document.querySelector('.mob-overlay');
   const navLinks   = document.querySelectorAll('.glass-nav__links a');
   const mobLinks   = document.querySelectorAll('.mob-overlay a');
-  const sections   = document.querySelectorAll('.section, .hero');
+  const sections   = document.querySelectorAll('.section, .hero, footer#contact');
   const themeToggle = document.querySelector('.theme-toggle');
   const htmlEl     = document.documentElement;
 
@@ -182,9 +188,12 @@
 
   // ---------- HIDE NAV ON SCROLL DOWN ----------
   let lastY = 0;
+  let isScrollingTo = false; // flag to prevent nav hide during programmatic scroll
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    glassNav.classList.toggle('hide', y > lastY && y > 100);
+    if (!isScrollingTo) {
+      glassNav.classList.toggle('hide', y > lastY && y > 100);
+    }
     lastY = y;
   }, { passive: true });
 
@@ -194,6 +203,11 @@
     const pos = scrollY + innerHeight / 3;
     let cur = '';
     spy.forEach(s => { if (s.offsetTop <= pos) cur = s.id; });
+    // If scrolled to the very bottom, activate the last section (contact)
+    if ((window.innerHeight + Math.ceil(window.scrollY)) >= document.documentElement.scrollHeight) {
+      const lastSection = spy[spy.length - 1];
+      if (lastSection) cur = lastSection.id;
+    }
     navLinks.forEach(a => {
       a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
     });
@@ -205,24 +219,40 @@
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-      if (href === '#') {
-        e.preventDefault();
+      e.preventDefault();
+
+      // Show nav and suppress hide during scroll
+      glassNav.classList.remove('hide');
+      isScrollingTo = true;
+      lastY = window.scrollY;
+
+      if (href === '#' || href === '#hero') {
         if (lenis) {
-          lenis.scrollTo(0);
+          lenis.scrollTo(0, {
+            duration: 1.2,
+            onComplete: () => { isScrollingTo = false; lastY = window.scrollY; }
+          });
         } else {
-          scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setTimeout(() => { isScrollingTo = false; lastY = window.scrollY; }, 1200);
         }
         history.pushState?.(null, null, href);
         return;
       }
+
       const t = document.querySelector(href);
-      if (!t) return;
-      e.preventDefault();
+      if (!t) { isScrollingTo = false; return; }
+
       if (lenis) {
-        lenis.scrollTo(t, { offset: -90 });
+        lenis.scrollTo(t, {
+          offset: -90,
+          duration: 1.2,
+          onComplete: () => { isScrollingTo = false; lastY = window.scrollY; }
+        });
       } else {
-        const top = t.getBoundingClientRect().top + scrollY - 90;
-        scrollTo({ top, behavior: 'smooth' });
+        const top = t.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top, behavior: 'smooth' });
+        setTimeout(() => { isScrollingTo = false; lastY = window.scrollY; }, 1200);
       }
       history.pushState?.(null, null, href);
     });
@@ -239,6 +269,29 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => io.observe(el));
+
+  // ---------- BACK TO TOP BUTTON ----------
+  const backToTop = document.getElementById('back-to-top');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => {
+      glassNav.classList.remove('hide');
+      isScrollingTo = true;
+      lastY = window.scrollY;
+      if (lenis) {
+        lenis.scrollTo(0, {
+          duration: 1.2,
+          onComplete: () => { isScrollingTo = false; lastY = window.scrollY; }
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => { isScrollingTo = false; lastY = window.scrollY; }, 1200);
+      }
+    });
+  }
 
   // ---------- AMBIENT PARTICLE BACKGROUND ----------
   const pCanvas = document.getElementById('particle-canvas');
